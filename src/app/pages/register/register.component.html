@@ -1,0 +1,76 @@
+<div class="register-page">
+
+  <h1>ثبت‌نام بیمار</h1>
+
+  <form (ngSubmit)="register()">
+
+    <input
+      type="text"
+      name="national_code"
+      [(ngModel)]="national_code"
+      placeholder="کد ملی"
+      maxlength="10"
+      required
+    >
+
+    <input
+      type="text"
+      name="first_name"
+      [(ngModel)]="first_name"
+      placeholder="نام"
+      required
+    >
+
+    <input
+      type="text"
+      name="last_name"
+      [(ngModel)]="last_name"
+      placeholder="نام خانوادگی"
+      required
+    >
+
+    <input
+      type="text"
+      name="phone"
+      [(ngModel)]="phone"
+      placeholder="شماره تلفن"
+    >
+
+    <input
+      type="email"
+      name="email"
+      [(ngModel)]="email"
+      placeholder="ایمیل"
+    >
+
+    <input
+      type="password"
+      name="password"
+      [(ngModel)]="password"
+      placeholder="رمز عبور"
+      required
+    >
+
+    <input
+      type="password"
+      name="confirm_password"
+      [(ngModel)]="confirm_password"
+      placeholder="تکرار رمز عبور"
+      required
+    >
+
+    <button type="submit">
+      ثبت‌نام
+    </button>
+
+  </form>
+
+  <p class="success" *ngIf="successMessage">
+    {{ successMessage }}
+  </p>
+
+  <p class="error" *ngIf="errorMessage">
+    {{ errorMessage }}
+  </p>
+
+</div>

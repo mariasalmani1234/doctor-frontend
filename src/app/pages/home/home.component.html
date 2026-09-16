@@ -1,0 +1,49 @@
+<div class="home">
+
+  <h1>پزشکان</h1>
+
+  <p *ngIf="loading">
+    در حال دریافت اطلاعات پزشکان...
+  </p>
+
+  <p *ngIf="errorMessage">
+    {{ errorMessage }}
+  </p>
+
+  <div class="doctors">
+
+    <div class="doctor-card" *ngFor="let doctor of doctors">
+
+      <h2>
+        دکتر {{ doctor.first_name }} {{ doctor.last_name }}
+      </h2>
+
+      <p>
+        تخصص: {{ doctor.specialty_name }}
+      </p>
+
+      <p>
+        شهر: {{ doctor.city }}
+      </p>
+
+      <p>
+        منطقه: {{ doctor.area }}
+      </p>
+
+      <p>
+        سابقه: {{ doctor.experience }} سال
+      </p>
+
+      <p>
+        ⭐ {{ doctor.rating }}
+      </p>
+
+      <button>
+        دریافت نوبت
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
