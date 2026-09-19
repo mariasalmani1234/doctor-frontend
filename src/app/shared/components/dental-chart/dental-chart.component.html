@@ -1,0 +1,328 @@
+<div class="dental-container">
+
+  <div class="chart-header">
+
+    <div>
+      <h2>نقشه دندان‌ها</h2>
+
+      <p>
+        برای ثبت خدمت جدید روی دندان موردنظر کلیک کنید.
+      </p>
+    </div>
+
+  </div>
+
+  <div class="legend">
+
+    <div class="legend-item">
+      <span class="legend-dot healthy"></span>
+      سالم
+    </div>
+
+    <div class="legend-item">
+      <span class="legend-dot filled"></span>
+      پرکردگی
+    </div>
+
+    <div class="legend-item">
+      <span class="legend-dot root-canal"></span>
+      عصب‌کشی
+    </div>
+
+    <div class="legend-item">
+      <span class="legend-dot crown"></span>
+      روکش
+    </div>
+
+    <div class="legend-item">
+      <span class="legend-dot extracted"></span>
+      کشیده شده
+    </div>
+
+    <div class="legend-item">
+      <span class="legend-dot implant"></span>
+      ایمپلنت
+    </div>
+
+  </div>
+
+
+
+  <section class="jaw-section">
+
+    <div class="jaw-title">
+      فک بالا
+    </div>
+
+    <div class="teeth-row upper-row">
+
+      <button
+        *ngFor="let tooth of upperTeeth"
+        type="button"
+        [class]="getToothClass(tooth)"
+        (click)="openTreatmentDialog(tooth)"
+      >
+
+        <span class="tooth-number">
+          {{ tooth.number }}
+        </span>
+
+        <span class="tooth-shape">
+
+          <svg
+            viewBox="0 0 80 100"
+            aria-hidden="true"
+          >
+            <path
+              d="M40 5
+                 C24 5 13 17 13 33
+                 C13 46 20 53 24 64
+                 C27 73 25 90 32 94
+                 C36 97 39 88 40 79
+                 C41 88 44 97 48 94
+                 C55 90 53 73 56 64
+                 C60 53 67 46 67 33
+                 C67 17 56 5 40 5Z"
+            />
+          </svg>
+
+        </span>
+
+        <span
+          class="status-mark"
+          *ngIf="tooth.status !== 'healthy'"
+        >
+          {{ getStatusLabel(tooth.status) }}
+        </span>
+
+      </button>
+
+    </div>
+
+  </section>
+
+
+
+  <section class="jaw-section lower-section">
+
+    <div class="jaw-title">
+      فک پایین
+    </div>
+
+    <div class="teeth-row lower-row">
+
+      <button
+        *ngFor="let tooth of lowerTeeth"
+        type="button"
+        [class]="getToothClass(tooth)"
+        (click)="openTreatmentDialog(tooth)"
+      >
+
+        <span class="tooth-number">
+          {{ tooth.number }}
+        </span>
+
+        <span class="tooth-shape">
+
+          <svg
+            viewBox="0 0 80 100"
+            aria-hidden="true"
+          >
+            <path
+              d="M40 5
+                 C24 5 13 17 13 33
+                 C13 46 20 53 24 64
+                 C27 73 25 90 32 94
+                 C36 97 39 88 40 79
+                 C41 88 44 97 48 94
+                 C55 90 53 73 56 64
+                 C60 53 67 46 67 33
+                 C67 17 56 5 40 5Z"
+            />
+          </svg>
+
+        </span>
+
+        <span
+          class="status-mark"
+          *ngIf="tooth.status !== 'healthy'"
+        >
+          {{ getStatusLabel(tooth.status) }}
+        </span>
+
+      </button>
+
+    </div>
+
+  </section>
+
+
+
+  <section class="recent-treatments">
+
+    <div class="recent-header">
+
+      <h3>
+        آخرین اقدامات انجام شده
+      </h3>
+
+    </div>
+
+    <div
+      class="treatment-list"
+      *ngIf="treatments.length > 0"
+    >
+
+      <div
+        class="treatment-item"
+        *ngFor="let treatment of treatments"
+      >
+
+        <div class="treatment-tooth">
+          دندان {{ treatment.toothNumber }}
+        </div>
+
+        <div class="treatment-info">
+
+          <strong>
+            {{ treatment.serviceLabel }}
+          </strong>
+
+          <span>
+            {{ treatment.date }}
+          </span>
+
+          <small *ngIf="treatment.notes">
+            {{ treatment.notes }}
+          </small>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</div>
+
+
+
+<div
+  class="dialog-overlay"
+  *ngIf="dialogOpen"
+  (click)="closeDialog()"
+>
+
+  <div
+    class="dialog"
+    (click)="$event.stopPropagation()"
+  >
+
+    <div class="dialog-header">
+
+      <div>
+
+        <h2>
+          ثبت خدمت جدید
+        </h2>
+
+        <p *ngIf="selectedTooth">
+          دندان {{ selectedTooth.number }}
+        </p>
+
+      </div>
+
+      <button
+        type="button"
+        class="close-button"
+        (click)="closeDialog()"
+      >
+        ×
+      </button>
+
+    </div>
+
+
+    <div class="dialog-body">
+
+      <label>
+        نوع خدمت
+      </label>
+
+      <select
+        [(ngModel)]="form.service"
+      >
+
+        <option
+          *ngFor="let service of serviceOptions"
+          [value]="service.value"
+        >
+          {{ service.label }}
+        </option>
+
+      </select>
+
+
+      <label>
+        تاریخ انجام
+      </label>
+
+      <input
+        type="date"
+        [(ngModel)]="form.date"
+      />
+
+
+      <label>
+        توضیحات
+      </label>
+
+      <textarea
+        [(ngModel)]="form.notes"
+        rows="4"
+        placeholder="توضیحات مربوط به این خدمت..."
+      ></textarea>
+
+
+      <div
+        class="selected-preview"
+        *ngIf="selectedTooth"
+      >
+
+        <span>
+          دندان انتخاب شده
+        </span>
+
+        <strong>
+          {{ selectedTooth.number }}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <div class="dialog-footer">
+
+      <button
+        type="button"
+        class="cancel-button"
+        (click)="closeDialog()"
+      >
+        انصراف
+      </button>
+
+      <button
+        type="button"
+        class="save-button"
+        (click)="saveTreatment()"
+      >
+        ثبت خدمت
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
