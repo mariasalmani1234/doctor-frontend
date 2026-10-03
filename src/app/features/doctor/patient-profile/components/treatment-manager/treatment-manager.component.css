@@ -1,0 +1,540 @@
+:host {
+
+  display:block;
+
+  direction:rtl;
+
+}
+
+
+
+.records-panel {
+
+  background:#ffffff;
+
+  border-radius:22px;
+
+  padding:25px;
+
+  border:1px solid #e5e7eb;
+
+  box-shadow:
+
+  0 8px 25px rgba(15,23,42,.05);
+
+}
+
+
+
+
+
+/* Header */
+
+.records-header {
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  margin-bottom:25px;
+
+}
+
+
+
+.title-line {
+
+  display:flex;
+
+  align-items:center;
+
+  gap:12px;
+
+}
+
+
+
+.title-line h2 {
+
+  margin:0;
+
+  font-size:24px;
+
+  color:#0f172a;
+
+}
+
+
+
+.count {
+
+  width:36px;
+
+  height:36px;
+
+  border-radius:50%;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  background:#e8f7f3;
+
+  color:#0f9d8a;
+
+  font-weight:800;
+
+}
+
+
+
+
+
+.records-header p {
+
+  margin:8px 0 0;
+
+  color:#64748b;
+
+  font-size:14px;
+
+}
+
+
+
+
+
+.new-btn {
+
+  border:none;
+
+  background:#0f9d8a;
+
+  color:white;
+
+  padding:12px 22px;
+
+  border-radius:12px;
+
+  font-family:inherit;
+
+  font-weight:700;
+
+  cursor:pointer;
+
+  transition:.2s;
+
+}
+
+
+
+.new-btn:hover {
+
+  background:#087f70;
+
+}
+
+
+
+
+
+/* Table */
+
+.table-wrapper {
+
+  border:1px solid #e5e7eb;
+
+  border-radius:18px;
+
+  overflow:hidden;
+
+}
+
+
+
+
+
+table {
+
+  width:100%;
+
+  border-collapse:collapse;
+
+  min-width:900px;
+
+}
+
+
+
+
+
+thead {
+
+  background:#f8fafc;
+
+}
+
+
+
+th {
+
+  padding:18px;
+
+  text-align:right;
+
+  color:#64748b;
+
+  font-size:13px;
+
+  font-weight:800;
+
+}
+
+
+
+
+
+td {
+
+  padding:18px;
+
+  border-bottom:1px solid #eef2f7;
+
+  color:#334155;
+
+  font-size:14px;
+
+}
+
+
+
+
+
+tbody tr {
+
+  transition:.2s;
+
+}
+
+
+
+tbody tr:hover {
+
+  background:#fcfdfd;
+
+}
+
+
+
+
+
+td strong {
+
+  color:#0f172a;
+
+  font-weight:800;
+
+}
+
+
+
+
+
+/* Status */
+
+.status {
+
+  display:inline-flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  padding:8px 16px;
+
+  border-radius:20px;
+
+  font-size:12px;
+
+  font-weight:800;
+
+  min-width:95px;
+
+}
+
+
+
+
+
+/* در حال انجام */
+
+.status.progress {
+
+  background:#dcfce7;
+
+  color:#15803d;
+
+}
+
+
+
+
+
+/* تکمیل شده */
+
+.status.completed {
+
+  background:#dbeafe;
+
+  color:#2563eb;
+
+}
+
+
+
+
+
+/* نیاز به بررسی */
+
+.status.review {
+
+  background:#fef3c7;
+
+  color:#b45309;
+
+}
+
+
+
+
+
+/* لغو شده */
+
+.status.cancelled {
+
+  background:#e5e7eb;
+
+  color:#475569;
+
+}
+
+
+
+
+
+/* Actions */
+
+.actions {
+
+  display:flex;
+
+  gap:6px;
+
+  align-items:center;
+
+}
+
+
+
+.action-btn {
+
+  border:none;
+
+  border-radius:8px;
+
+  padding:6px 10px;
+
+  font-family:inherit;
+
+  font-size:12px;
+
+  font-weight:700;
+
+  cursor:pointer;
+
+  display:flex;
+
+  align-items:center;
+
+  gap:5px;
+
+  transition:.2s;
+
+}
+
+
+
+.icon {
+
+  font-size:15px;
+
+}
+
+
+
+/* مشاهده */
+
+.action-btn.view {
+
+  background:#dbeafe;
+
+  color:#2563eb;
+
+}
+
+
+
+.action-btn.view:hover {
+
+  background:#bfdbfe;
+
+}
+
+
+
+
+
+/* ویرایش */
+
+.action-btn.edit {
+
+  background:#ffedd5;
+
+  color:#ea580c;
+
+}
+
+
+
+.action-btn.edit:hover {
+
+  background:#fed7aa;
+
+}
+
+
+
+
+
+/* حذف */
+
+.action-btn.delete {
+
+  background:#ef4444;
+
+  color:white;
+
+}
+
+
+
+.action-btn.delete:hover {
+
+  background:#dc2626;
+
+}
+
+
+
+
+
+/* Pagination */
+
+.pagination {
+
+  display:flex;
+
+  justify-content:center;
+
+  gap:8px;
+
+  margin-top:22px;
+
+}
+
+
+
+
+
+.pagination button {
+
+  width:38px;
+
+  height:38px;
+
+  border-radius:10px;
+
+  border:1px solid #dbe3ec;
+
+  background:white;
+
+  color:#334155;
+
+  cursor:pointer;
+
+  font-family:inherit;
+
+  font-weight:700;
+
+}
+
+
+
+
+
+.pagination button.active {
+
+  background:#0f9d8a;
+
+  color:white;
+
+  border-color:#0f9d8a;
+
+}
+
+
+
+
+
+.loading {
+
+  padding:40px;
+
+  text-align:center;
+
+  color:#64748b;
+
+}
+
+
+
+
+
+@media(max-width:900px){
+
+
+.records-header {
+
+  flex-direction:column;
+
+  align-items:flex-start;
+
+  gap:15px;
+
+}
+
+
+
+.new-btn {
+
+  width:100%;
+
+}
+
+
+
+}

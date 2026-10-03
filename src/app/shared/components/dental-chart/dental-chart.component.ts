@@ -1,233 +1,1119 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {
+  Component,
+  Input,
+  OnInit,
+  inject
+} from '@angular/core';
 
-import { DentalTooth, 
-  DentalTreatment,
-  DentalToothStatus } from '../../../models/dental.model';
+import { TreatmentStatus } from '../../../core/enums/treatment-status.enum';
+import {
+  CommonModule
+} from '@angular/common';
+
+
+import {
+  FormsModule
+} from '@angular/forms';
+
+
+
+import {
+  DentalTooth,
+  DentalToothStatus
+} from '../../../models/dental.model';
+
+
+
+import {
+  Treatment
+} from '../../../models/treatment.model';
+
+
+
+import {
+  TreatmentService
+} from '../../../core/services/treatment.service';
+
+
+
+interface ToothPoint {
+
+  number:number;
+
+  top:string;
+
+  left:string;
+
+}
+
+
+
 
 
 @Component({
-  selector: 'app-dental-chart',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule
-  ],
-  templateUrl: './dental-chart.component.html',
-  styleUrl: './dental-chart.component.css'
+
+selector:'app-dental-chart',
+
+standalone:true,
+
+
+imports:[
+
+CommonModule,
+
+FormsModule
+
+],
+
+
+
+templateUrl:'./dental-chart.component.html',
+
+
+
+styleUrl:'./dental-chart.component.css'
+
+
 })
-export class DentalChartComponent {
-
+export class DentalChartComponent implements OnInit {
 
-  upperTeeth: DentalTooth[] = [
-    { number: 18, status: 'healthy' },
-    { number: 17, status: 'healthy' },
-    { number: 16, status: 'healthy' },
-    { number: 15, status: 'healthy' },
-    { number: 14, status: 'healthy' },
-    { number: 13, status: 'healthy' },
-    { number: 12, status: 'healthy' },
-    { number: 11, status: 'healthy' },
 
-    { number: 21, status: 'healthy' },
-    { number: 22, status: 'healthy' },
-    { number: 23, status: 'healthy' },
-    { number: 24, status: 'healthy' },
-    { number: 25, status: 'healthy' },
-    { number: 26, status: 'healthy' },
-    { number: 27, status: 'healthy' },
-    { number: 28, status: 'healthy' }
-  ];
 
+private treatmentService =
+inject(TreatmentService);
 
-  lowerTeeth: DentalTooth[] = [
-    { number: 48, status: 'healthy' },
-    { number: 47, status: 'healthy' },
-    { number: 46, status: 'healthy' },
-    { number: 45, status: 'healthy' },
-    { number: 44, status: 'healthy' },
-    { number: 43, status: 'healthy' },
-    { number: 42, status: 'healthy' },
-    { number: 41, status: 'healthy' },
 
-    { number: 31, status: 'healthy' },
-    { number: 32, status: 'healthy' },
-    { number: 33, status: 'healthy' },
-    { number: 34, status: 'healthy' },
-    { number: 35, status: 'healthy' },
-    { number: 36, status: 'healthy' },
-    { number: 37, status: 'healthy' },
-    { number: 38, status: 'healthy' }
-  ];
 
 
+@Input({required:true})
+patientId!:number;
 
 
-  treatments: DentalTreatment[] = [];
 
 
 
-  selectedTooth: DentalTooth | null = null;
 
-  dialogOpen = false;
+teeth:ToothPoint[]=[
 
 
-  form = {
-    service: 'filled' as DentalToothStatus,
-    date: '',
-    notes: ''
-  };
+{number:18, top:'39%', left:'35%'},
 
+{number:17, top:'32%', left:'35%'},
 
-  serviceOptions = [
-    {
-      value: 'filled' as DentalToothStatus,
-      label: 'پرکردگی'
-    },
-    {
-      value: 'root-canal' as DentalToothStatus,
-      label: 'عصب‌کشی'
-    },
-    {
-      value: 'crown' as DentalToothStatus,
-      label: 'روکش'
-    },
-    {
-      value: 'extracted' as DentalToothStatus,
-      label: 'کشیدن'
-    },
-    {
-      value: 'implant' as DentalToothStatus,
-      label: 'ایمپلنت'
-    }
-  ];
+{number:16, top:'26%', left:'36%'},
 
+{number:15, top:'21%', left:'38%'},
 
+{number:14, top:'17%', left:'40%'},
 
-  openTreatmentDialog(tooth: DentalTooth): void {
+{number:13, top:'14%', left:'42%'},
 
-    this.selectedTooth = tooth;
+{number:12, top:'12%', left:'44%'},
 
-    this.form = {
-      service: 'filled',
-      date: this.getTodayDate(),
-      notes: ''
-    };
+{number:11, top:'11%', left:'47%'},
 
-    this.dialogOpen = true;
-  }
 
 
+{number:21, top:'11%', left:'50%'},
 
-  closeDialog(): void {
+{number:22, top:'11%', left:'53%'},
 
-    this.dialogOpen = false;
+{number:23, top:'13%', left:'55%'},
 
-    this.selectedTooth = null;
-  }
+{number:24, top:'16%', left:'57%'},
 
+{number:25, top:'20%', left:'59%'},
 
-  saveTreatment(): void {
+{number:26, top:'25%', left:'60%'},
 
-    if (!this.selectedTooth) {
-      return;
-    }
+{number:27, top:'32%', left:'61%'},
 
+{number:28, top:'39%', left:'61%'},
 
-    const selectedService = this.serviceOptions.find(
-      item => item.value === this.form.service
-    );
 
 
-    if (!selectedService) {
-      return;
-    }
 
+{number:48, top:'61%', left:'35%'},
 
-    const newTreatment: DentalTreatment = {
+{number:47, top:'68%', left:'35%'},
 
-      id: Date.now(),
+{number:46, top:'74%', left:'36%'},
 
-      toothNumber: this.selectedTooth.number,
+{number:45, top:'80%', left:'38%'},
 
-      service: selectedService.value,
+{number:44, top:'84%', left:'40%'},
 
-      serviceLabel: selectedService.label,
+{number:43, top:'86%', left:'42%'},
 
-      date: this.form.date,
+{number:42, top:'87%', left:'44%'},
 
-      notes: this.form.notes
+{number:41, top:'88%', left:'47%'},
 
-    };
 
 
-    this.treatments.unshift(newTreatment);
 
+{number:31, top:'90%', left:'49%'},
 
+{number:32, top:'89%', left:'52%'},
 
-    this.selectedTooth.status = selectedService.value;
+{number:33, top:'88%', left:'55%'},
 
-    this.selectedTooth.lastTreatment =
-      selectedService.label;
+{number:34, top:'84%', left:'57%'},
 
+{number:35, top:'80%', left:'59%'},
 
+{number:36, top:'75%', left:'60%'},
 
-    this.closeDialog();
-  }
+{number:37, top:'67%', left:'61%'},
 
+{number:38, top:'61%', left:'61%'}
 
 
+];
 
-  getToothClass(tooth: DentalTooth): string {
 
-    return `tooth ${tooth.status}`;
-  }
 
 
 
 
-  getTodayDate(): string {
 
-    const today = new Date();
+treatments:Treatment[]=[];
 
-    const year = today.getFullYear();
 
-    const month = String(
-      today.getMonth() + 1
-    ).padStart(2, '0');
 
-    const day = String(
-      today.getDate()
-    ).padStart(2, '0');
+selectedTooth:DentalTooth|null=null;
 
 
-    return `${year}-${month}-${day}`;
-  }
+selectedTreatment:Treatment|null=null;
 
 
 
-  getStatusLabel(status: string): string {
+dialogOpen=false;
 
-    switch (status) {
+showAddForm=false;
 
-      case 'filled':
-        return 'پرکردگی';
 
-      case 'root-canal':
-        return 'عصب‌کشی';
 
-      case 'crown':
-        return 'روکش';
+form:{
 
-      case 'extracted':
-        return 'کشیده شده';
+title:string;
 
-      case 'implant':
-        return 'ایمپلنت';
+diagnosis:string;
 
-      default:
-        return 'سالم';
-    }
-  }
+status:TreatmentStatus;
+
+date:string;
+
+description:string;
+
+}={
+
+
+title:'',
+
+diagnosis:'',
+
+status:TreatmentStatus.InProgress,
+
+date:'',
+
+description:''
+
+
+};
+
+
+
+
+
+ngOnInit(){
+
+
+this.loadTreatments();
+
+
+}
+
+
+
+
+
+
+loadTreatments(){
+
+
+if(!this.patientId){
+
+return;
+
+}
+
+
+
+this.treatmentService
+
+.getByPatientId(this.patientId)
+
+.subscribe({
+
+
+next:data=>{
+
+
+this.treatments=data;
+
+
+},
+
+
+error:error=>{
+
+
+console.error(
+
+'Treatment loading error',
+
+error
+
+);
+
+
+}
+
+
+});
+
+
+}
+
+
+
+
+
+
+
+getToothStatus(toothNumber:number):DentalToothStatus{
+
+
+const treatment=this.treatments.find(
+
+item=>
+
+item.toothNumber===toothNumber
+
+);
+
+
+
+if(!treatment){
+
+return 'healthy';
+
+}
+
+
+
+
+
+const title=treatment.title.toLowerCase();
+
+
+
+
+
+if(
+
+title.includes('عصب') ||
+
+title.includes('ریشه')
+
+){
+
+return 'root-canal';
+
+}
+
+
+
+
+
+if(
+
+title.includes('روکش') ||
+
+title.includes('پروتز')
+
+){
+
+return 'crown';
+
+}
+
+
+
+
+
+if(
+
+title.includes('ترمیم') ||
+
+title.includes('پرکردگی')
+
+){
+
+return 'filled';
+
+}
+
+
+
+
+
+if(
+
+title.includes('ایمپلنت')
+
+){
+
+return 'implant';
+
+}
+
+
+
+
+
+return 'healthy';
+
+
+}
+getToothPointClass(toothNumber:number){
+
+return `tooth-point ${this.getToothStatus(toothNumber)}`;
+
+}
+
+
+
+
+
+
+
+openTreatmentDialog(tooth:ToothPoint){
+
+
+if(!tooth){
+
+return;
+
+}
+
+
+
+this.selectedTooth={
+
+
+number:tooth.number,
+
+
+status:this.getToothStatus(tooth.number)
+
+
+};
+
+
+
+this.selectedTreatment=null;
+
+
+this.showAddForm=false;
+
+
+this.dialogOpen=true;
+
+
+}
+
+openAddTreatment(){
+
+this.showAddForm=true;
+
+
+this.form={
+
+
+title:'',
+
+
+diagnosis:'',
+
+
+status:TreatmentStatus.InProgress,
+
+
+date:this.getTodayDate(),
+
+
+description:''
+
+
+};
+
+
+}
+
+
+
+
+
+
+
+
+closeDialog(){
+
+
+this.dialogOpen=false;
+
+
+this.selectedTooth=null;
+
+
+this.selectedTreatment=null;
+
+this.showAddForm=false;
+}
+
+
+
+
+
+
+
+
+
+getSelectedToothTreatments(){
+
+
+if(!this.selectedTooth){
+
+return [];
+
+}
+
+
+
+return this.treatments.filter(
+
+item=>
+
+item.toothNumber===this.selectedTooth!.number
+
+);
+
+
+}
+
+
+
+
+
+
+
+
+
+getSelectedToothStatusLabel(){
+
+
+if(!this.selectedTooth){
+
+return 'سالم';
+
+}
+
+
+
+switch(
+
+this.getToothStatus(
+
+this.selectedTooth.number
+
+)
+
+){
+
+
+case 'root-canal':
+
+return 'عصب‌کشی';
+
+
+
+case 'filled':
+
+return 'ترمیم / پرکردگی';
+
+
+
+case 'crown':
+
+return 'روکش';
+
+
+
+case 'implant':
+
+return 'ایمپلنت';
+
+
+
+default:
+
+return 'سالم';
+
+
+}
+
+
+}
+
+
+
+
+
+
+
+
+
+editTreatment(item:Treatment){
+
+
+
+this.selectedTreatment=item;
+
+
+
+this.form={
+
+
+title:item.title,
+
+
+diagnosis:item.diagnosis ?? '',
+
+
+status:item.status,
+
+
+date:item.startDate ?? '',
+
+
+description:item.description ?? ''
+
+
+};
+
+
+
+}
+
+
+
+
+
+
+
+
+
+cancelEdit(){
+
+
+this.selectedTreatment=null;
+
+
+
+this.form={
+
+
+title:'',
+
+
+diagnosis:'',
+
+
+status:TreatmentStatus.InProgress,
+
+
+date:this.getTodayDate(),
+
+
+description:''
+
+
+};
+
+
+}
+
+
+
+
+
+
+
+
+
+saveTreatment(){
+
+
+
+if(!this.selectedTooth){
+
+return;
+
+}
+
+
+
+
+
+const data = {
+
+
+patientId:this.patientId,
+
+
+title:this.form.title,
+
+
+diagnosis:this.form.diagnosis,
+
+
+toothNumber:this.selectedTooth.number,
+
+
+status:this.form.status as any,
+
+
+startDate:this.form.date,
+
+
+description:this.form.description
+
+
+};
+
+
+
+
+
+
+
+if(this.selectedTreatment){
+
+
+
+this.treatmentService
+
+.update(
+
+this.selectedTreatment.id,
+
+data
+
+)
+
+.subscribe({
+
+
+next:updated=>{
+
+
+if(updated){
+
+
+const index=
+
+this.treatments.findIndex(
+
+x=>
+
+x.id===updated.id
+
+);
+
+
+
+if(index!==-1){
+
+this.treatments[index]=updated;
+
+}
+
+
+}
+
+
+
+this.closeDialog();
+
+
+},
+
+
+
+error:error=>{
+
+
+console.error(
+
+'Update treatment error',
+
+error
+
+);
+
+
+}
+
+
+});
+
+
+
+}
+
+else{
+
+
+
+this.treatmentService
+
+.create(data)
+
+.subscribe({
+
+
+next:created=>{
+
+
+this.treatments.unshift(created);
+
+
+this.closeDialog();
+
+
+},
+
+
+
+error:error=>{
+
+
+console.error(
+
+'Create treatment error',
+
+error
+
+);
+
+
+}
+
+
+
+});
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+deleteTreatment(item:Treatment){
+
+
+
+this.treatmentService
+
+.delete(item.id)
+
+.subscribe({
+
+
+next:success=>{
+
+
+if(success){
+
+
+this.treatments=
+
+this.treatments.filter(
+
+x=>
+
+x.id!==item.id
+
+);
+
+
+}
+
+
+},
+
+
+
+error:error=>{
+
+
+console.error(
+
+'Delete treatment error',
+
+error
+
+);
+
+
+}
+
+
+});
+
+
+
+}
+
+
+
+
+
+
+
+
+
+get dentalSummary(){
+
+
+
+const result={
+
+
+healthy:32,
+
+
+filled:0,
+
+
+rootCanal:0,
+
+
+crown:0,
+
+
+implant:0
+
+
+};
+
+
+
+
+
+this.treatments.forEach(item=>{
+
+
+
+if(!item.toothNumber){
+
+return;
+
+}
+
+
+
+
+
+const status=
+
+this.getToothStatus(
+
+item.toothNumber
+
+);
+
+
+
+
+
+
+switch(status){
+
+
+
+case 'filled':
+
+result.filled++;
+
+break;
+
+
+
+case 'root-canal':
+
+result.rootCanal++;
+
+break;
+
+
+
+case 'crown':
+
+result.crown++;
+
+break;
+
+
+
+case 'implant':
+
+result.implant++;
+
+break;
+
+
+
+}
+
+
+
+});
+
+
+
+
+
+
+
+result.healthy=
+
+32 -
+
+(
+
+result.filled+
+
+result.rootCanal+
+
+result.crown+
+
+result.implant
+
+);
+
+
+
+
+
+return result;
+
+
+}
+
+
+
+
+
+
+
+
+
+get recentTreatments(){
+
+
+return this.treatments.slice(0,5);
+
+
+}
+
+
+
+
+
+
+
+
+
+getTodayDate(){
+
+
+return new Date()
+
+.toISOString()
+
+.substring(0,10);
+
+
+}
+
+
+
+
+
+
+
+getStatusLabel(status:string){
+
+
+switch(status){
+
+
+
+case 'in_progress':
+
+return 'در حال انجام';
+
+
+
+case 'completed':
+
+return 'تکمیل شده';
+
+
+
+case 'incomplete':
+
+return 'نیاز به بررسی';
+
+
+
+case 'cancelled':
+
+return 'لغو شده';
+
+
+
+default:
+
+return '-';
+
+
+}
+
+
+}
+
+
 }

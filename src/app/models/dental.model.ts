@@ -1,24 +1,30 @@
+// وضعیت ظاهری دندان در چارت
+
 export type DentalToothStatus =
+
   | 'healthy'
   | 'filled'
   | 'root-canal'
   | 'crown'
-  | 'extracted'
-  | 'implant';
+  | 'implant'
+  | 'extracted';
 
+
+
+
+
+// اطلاعات هر دندان روی چارت
 
 export interface DentalTooth {
-  number: number;
-  status: DentalToothStatus;
-  lastTreatment?: string;
-}
 
 
-export interface DentalTreatment {
-  id: number;
-  toothNumber: number;
-  service: DentalToothStatus;
-  serviceLabel: string;
-  date: string;
-  notes: string;
+  number:number;
+
+
+  status:DentalToothStatus;
+
+
+  lastTreatment?:string;
+
+
 }

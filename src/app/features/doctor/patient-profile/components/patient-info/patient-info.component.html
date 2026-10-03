@@ -1,0 +1,180 @@
+<section class="patient-info">
+
+
+<h2>
+اطلاعات کامل بیمار
+</h2>
+
+
+
+<div class="info-grid">
+
+
+
+<div>
+
+<label>
+نام بیمه شده
+</label>
+
+<strong>
+{{patient.firstName}}
+{{patient.lastName}}
+</strong>
+
+</div>
+
+
+
+<div>
+
+<label>
+شماره بیمه
+</label>
+
+<strong>
+{{patient.insuranceNumber || '-'}}
+</strong>
+
+</div>
+
+
+
+<div>
+
+<label>
+وضعیت بیمه شده
+</label>
+
+<strong>
+{{patient.insuranceStatus || '-'}}
+</strong>
+
+</div>
+
+
+
+
+<div>
+
+<label>
+جنسیت
+</label>
+
+<strong>
+{{patient.gender || '-'}}
+</strong>
+
+</div>
+
+
+
+
+<div>
+
+<label>
+وضعیت خدمتی
+</label>
+
+<strong>
+{{patient.serviceStatus || '-'}}
+</strong>
+
+</div>
+
+
+
+
+<div>
+
+<label>
+تاریخ تولد
+</label>
+
+<strong>
+{{patient.birthDate || '-'}}
+</strong>
+
+</div>
+
+
+
+
+<div>
+
+<label>
+کفالت
+</label>
+
+<strong>
+{{patient.coverageType || '-'}}
+</strong>
+
+</div>
+
+
+
+
+<div>
+
+<label>
+وضعیت ایثارگری
+</label>
+
+<strong>
+{{patient.veteranStatus || '-'}}
+</strong>
+
+</div>
+
+
+
+
+<div>
+
+<label>
+نسبت
+</label>
+
+<strong>
+{{patient.relation || '-'}}
+</strong>
+
+</div>
+
+
+
+
+<div>
+
+<label>
+سطح تحصیلات
+</label>
+
+<strong>
+{{patient.educationLevel || '-'}}
+</strong>
+
+</div>
+
+
+
+
+<div>
+
+<label>
+بیماری ویژه
+</label>
+
+<strong>
+{{patient.specialDisease || 'فاقد بیماری'}}
+</strong>
+
+</div>
+
+
+
+</div>
+
+
+</section>

@@ -1,0 +1,203 @@
+<article class="treatment-card">
+
+
+  <div class="card-accent"
+       [class.completed]="treatment.status === TreatmentStatus.Completed"
+       [class.progress]="treatment.status === TreatmentStatus.InProgress"
+       [class.incomplete]="treatment.status === TreatmentStatus.Incomplete"
+       [class.cancelled]="treatment.status === TreatmentStatus.Cancelled">
+  </div>
+
+
+
+  <div class="treatment-card-content">
+
+
+    <div class="treatment-top">
+
+
+      <div class="title-section">
+
+
+        <div class="treatment-icon">
+          ✚
+        </div>
+
+
+
+        <div>
+
+
+          <h3>
+            {{ treatment.title }}
+          </h3>
+
+
+
+          @if(treatment.diagnosis){
+
+            <span class="diagnosis">
+              {{ treatment.diagnosis }}
+            </span>
+
+          }
+
+
+        </div>
+
+
+      </div>
+
+
+
+
+      <span
+        class="status-badge"
+        [class]="getStatusClass(treatment.status)"
+      >
+
+        {{ getStatusLabel(treatment.status) }}
+
+      </span>
+
+
+
+    </div>
+
+
+
+
+
+    <div class="treatment-info">
+
+
+      <div class="info-item">
+
+        <div>
+
+          <span class="info-label">
+            تاریخ شروع
+          </span>
+
+          <strong>
+            {{ treatment.startDate || '-' }}
+          </strong>
+
+        </div>
+
+      </div>
+
+
+
+
+
+      <div class="info-item">
+
+        <div>
+
+          <span class="info-label">
+            تاریخ پایان
+          </span>
+
+          <strong>
+            {{ treatment.endDate || 'ادامه دارد' }}
+          </strong>
+
+        </div>
+
+      </div>
+
+
+
+
+
+      <div class="info-item">
+
+        <div>
+
+          <span class="info-label">
+            شناسه
+          </span>
+
+          <strong>
+            #{{ treatment.id }}
+          </strong>
+
+        </div>
+
+      </div>
+
+
+    </div>
+
+
+
+
+
+    @if(treatment.description){
+
+
+      <div class="description">
+
+
+        <span class="description-label">
+          توضیحات
+        </span>
+
+
+        <p>
+          {{ treatment.description }}
+        </p>
+
+
+      </div>
+
+
+    }
+
+
+
+
+
+    <div class="card-footer">
+
+
+      <div class="actions">
+
+
+        <button
+          class="action-btn view-btn"
+          (click)="onView()"
+        >
+          مشاهده
+        </button>
+
+
+
+        <button
+          class="action-btn edit-btn"
+          (click)="onEdit()"
+        >
+          ویرایش
+        </button>
+
+
+
+        <button
+          class="action-btn delete-btn"
+          (click)="onDelete()"
+        >
+          حذف
+        </button>
+
+
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+</article>

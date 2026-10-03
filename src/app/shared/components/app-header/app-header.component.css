@@ -1,0 +1,84 @@
+.app-header{
+
+
+height:80px;
+
+background:white;
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+padding:0 35px;
+
+border-bottom:1px solid #e5e7eb;
+
+box-shadow:
+0 5px 20px rgba(0,0,0,.04);
+
+}
+
+
+
+.brand{
+
+display:flex;
+
+align-items:center;
+
+gap:15px;
+
+}
+
+
+
+.brand img{
+
+width:55px;
+
+height:55px;
+
+object-fit:contain;
+
+}
+
+
+
+.brand h1{
+
+margin:0;
+
+font-size:22px;
+
+color:#0f9d8a;
+
+}
+
+
+
+.brand span{
+
+font-size:13px;
+
+color:#64748b;
+
+}
+
+
+
+.user-role{
+
+
+background:#e8f7f3;
+
+color:#0f9d8a;
+
+padding:8px 16px;
+
+border-radius:20px;
+
+font-weight:700;
+
+}

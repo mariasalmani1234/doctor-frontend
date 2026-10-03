@@ -1,367 +1,763 @@
-.dental-container {
-  background: #ffffff;
-  border-radius: 20px;
-  padding: 28px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
-  direction: rtl;
-}
+:host{
 
-.chart-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
-}
+display:block;
 
-.chart-header h2 {
-  margin: 0 0 8px;
-  font-size: 24px;
-}
+direction:rtl;
 
-.chart-header p {
-  margin: 0;
-  color: #7a8797;
 }
 
 
-.legend {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  padding: 16px 0;
-  border-bottom: 1px solid #edf1f5;
-  margin-bottom: 28px;
-}
 
-.legend-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: #596579;
-  font-size: 14px;
-}
+.dental-container{
 
-.legend-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  border: 2px solid #d7dde7;
-}
+background:white;
 
-.legend-dot.healthy {
-  background: #ffffff;
-}
+border-radius:24px;
 
-.legend-dot.filled {
-  background: #49a9ff;
-}
+padding:28px;
 
-.legend-dot.root-canal {
-  background: #f6ad32;
-}
+border:1px solid #e5e7eb;
 
-.legend-dot.crown {
-  background: #ef6b73;
-}
+box-shadow:
+0 8px 30px rgba(15,23,42,.05);
 
-.legend-dot.extracted {
-  background: #8f9aa9;
-}
-
-.legend-dot.implant {
-  background: #46b88a;
 }
 
 
-.jaw-section {
-  padding: 22px;
-  border: 1px solid #edf1f5;
-  border-radius: 18px;
-  background: #fcfdff;
-}
 
-.lower-section {
-  margin-top: 24px;
-}
+/* Header */
 
-.jaw-title {
-  text-align: center;
-  font-size: 15px;
-  font-weight: 700;
-  color: #506078;
-  margin-bottom: 18px;
-}
+.chart-header{
 
-.teeth-row {
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  gap: 6px;
-  flex-wrap: nowrap;
-}
+margin-bottom:25px;
 
-.tooth {
-  position: relative;
-  width: 62px;
-  min-width: 62px;
-  height: 105px;
-  padding: 0;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  transition: transform 0.2s ease;
-}
-
-.tooth:hover {
-  transform: translateY(-5px);
-}
-
-.tooth-number {
-  font-size: 12px;
-  font-weight: 700;
-  color: #64748b;
-  margin-bottom: 5px;
-}
-
-.tooth-shape {
-  width: 50px;
-  height: 65px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.tooth-shape svg {
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-}
-
-.tooth-shape path {
-  fill: #ffffff;
-  stroke: #c7d0db;
-  stroke-width: 3;
-  transition: 0.2s ease;
 }
 
 
-.tooth.filled .tooth-shape path {
-  fill: #67b5ff;
-  stroke: #4e9fe6;
-}
 
-.tooth.root-canal .tooth-shape path {
-  fill: #ffc36b;
-  stroke: #eb9f32;
-}
+.chart-header h2{
 
-.tooth.crown .tooth-shape path {
-  fill: #f37a82;
-  stroke: #de6068;
-}
+margin:0 0 8px;
 
-.tooth.implant .tooth-shape path {
-  fill: #58bd91;
-  stroke: #42a376;
-}
+font-size:24px;
 
-.tooth.extracted .tooth-shape path {
-  fill: #c6ced8;
-  stroke: #9ba6b4;
-  opacity: 0.45;
-}
+color:#0f172a;
 
-.tooth.extracted::after {
-  content: '×';
-  position: absolute;
-  top: 38px;
-  font-size: 34px;
-  font-weight: 700;
-  color: #788493;
-}
-
-.status-mark {
-  font-size: 9px;
-  margin-top: 2px;
-  color: #607080;
-  white-space: nowrap;
 }
 
 
-.recent-treatments {
-  margin-top: 28px;
-  padding: 22px;
-  border: 1px solid #edf1f5;
-  border-radius: 18px;
+
+.chart-header p{
+
+margin:0;
+
+color:#64748b;
+
+font-size:14px;
+
 }
 
-.recent-header h3 {
-  margin: 0 0 18px;
+
+
+
+
+/* Summary */
+
+.dental-summary{
+
+background:#f8fafc;
+
+border:1px solid #e2e8f0;
+
+border-radius:18px;
+
+padding:20px;
+
+margin-bottom:25px;
+
 }
 
-.treatment-list {
-  display: grid;
-  gap: 12px;
+
+
+.summary-title{
+
+font-size:18px;
+
+font-weight:800;
+
+margin-bottom:18px;
+
 }
 
-.treatment-item {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  padding: 14px;
-  border: 1px solid #edf1f5;
-  border-radius: 12px;
-  background: #ffffff;
+
+
+.summary-grid{
+
+display:grid;
+
+grid-template-columns:repeat(5,1fr);
+
+gap:15px;
+
 }
 
-.treatment-tooth {
-  min-width: 100px;
-  font-weight: 700;
+
+
+.summary-grid div{
+
+background:white;
+
+border-radius:14px;
+
+padding:15px;
+
+display:flex;
+
+flex-direction:column;
+
+align-items:center;
+
+gap:8px;
+
+border:1px solid #edf1f5;
+
 }
 
-.treatment-info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+
+
+.summary-grid span{
+
+font-size:13px;
+
+color:#64748b;
+
 }
 
-.treatment-info strong {
-  font-size: 14px;
+
+
+.summary-grid strong{
+
+font-size:24px;
+
+color:#0f172a;
+
 }
 
-.treatment-info span,
-.treatment-info small {
-  color: #7c8797;
+
+
+
+
+
+
+/* Dental Image */
+
+.dental-map{
+
+border:1px solid #e2e8f0;
+
+border-radius:22px;
+
+padding:25px;
+
+margin-bottom:25px;
+
 }
+
+
+
+.chart-wrapper{
+
+position:relative;
+
+max-width:850px;
+
+margin:auto;
+
+}
+
+
+
+.dental-image{
+
+width:100%;
+
+display:block;
+
+}
+
+
+
+
+
+
+
+/* Tooth Points */
+
+.tooth-point{
+
+position:absolute;
+
+transform:translate(-50%,-50%);
+
+width:25px;
+
+height:25px;
+
+background:transparent;
+
+border:none;
+
+cursor:pointer;
+
+z-index:10;
+
+padding:0;
+
+}
+
+
+
+.tooth-status{
+
+display:none;
+
+position:absolute;
+
+inset:0;
+
+border-radius:50%;
+
+border:3px solid white;
+
+box-shadow:
+
+0 3px 12px rgba(0,0,0,.18);
+
+opacity:.85;
+
+transition:.25s;
+
+}
+
+
+
+
+
+/* Tooth Colors */
+
+
+.tooth-point.filled .tooth-status{
+
+display:block;
+
+background:#6e93bd;
+
+}
+
+
+
+.tooth-point.root-canal .tooth-status{
+
+display:block;
+
+background:#fcd34d;
+
+}
+
+
+
+.tooth-point.crown .tooth-status{
+
+display:block;
+
+background:#f9a8d4;
+
+}
+
+
+
+.tooth-point.implant .tooth-status{
+
+display:block;
+
+background:#86efac;
+
+}
+
+
+
+.tooth-point.extracted .tooth-status{
+
+display:block;
+
+background:#cbd5e1;
+
+}
+
+
+
+
+
+
+
+
+/* Recent Treatments */
+
+.recent-treatments{
+
+border:1px solid #e2e8f0;
+
+border-radius:18px;
+
+padding:20px;
+
+}
+
+
+
+.treatment-list{
+
+display:flex;
+
+flex-direction:column;
+
+gap:10px;
+
+}
+
+
+
+.treatment-item{
+
+display:flex;
+
+justify-content:space-between;
+
+background:#f8fafc;
+
+padding:14px;
+
+border-radius:12px;
+
+}
+
+
+
+
+
+
 
 
 /* Dialog */
 
-.dialog-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(23, 35, 52, 0.45);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2000;
-  padding: 20px;
+.dialog-overlay{
+
+position:fixed;
+
+inset:0;
+
+background:rgba(15,23,42,.45);
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+padding:20px;
+
+z-index:3000;
+
 }
 
-.dialog {
-  width: min(520px, 100%);
-  background: #ffffff;
-  border-radius: 18px;
-  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.2);
-  overflow: hidden;
-  direction: rtl;
+
+
+.dialog{
+
+width:360px;
+
+max-width:90%;
+
+background:white;
+
+border-radius:22px;
+
+overflow:hidden;
+
+box-shadow:
+
+0 20px 60px rgba(0,0,0,.25);
+
 }
 
-.dialog-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 20px 24px;
-  border-bottom: 1px solid #edf1f5;
+
+
+
+
+
+.dialog-header{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:20px;
+
+border-bottom:1px solid #e5e7eb;
+
 }
 
-.dialog-header h2 {
-  margin: 0 0 6px;
+
+
+.dialog-header h2{
+
+margin:0 0 5px;
+
 }
 
-.dialog-header p {
-  margin: 0;
-  color: #6f7b8b;
+
+
+.dialog-header p{
+
+margin:0;
+
+font-size:13px;
+
+color:#64748b;
+
 }
 
-.close-button {
-  border: none;
-  background: #f4f6f8;
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
-  font-size: 24px;
-  cursor: pointer;
+
+
+
+
+.close-button{
+
+width:38px;
+
+height:38px;
+
+border:none;
+
+border-radius:10px;
+
+background:#f1f5f9;
+
+font-size:22px;
+
+cursor:pointer;
+
 }
 
-.dialog-body {
-  padding: 24px;
+
+
+
+
+
+
+.dialog-body{
+
+padding:20px;
+
 }
 
-.dialog-body label {
-  display: block;
-  margin-bottom: 8px;
-  margin-top: 16px;
-  font-weight: 600;
+
+
+.dialog-body label{
+
+display:block;
+
+margin:15px 0 8px;
+
+font-weight:700;
+
+font-size:14px;
+
 }
 
-.dialog-body label:first-child {
-  margin-top: 0;
-}
+
 
 .dialog-body input,
+
 .dialog-body select,
-.dialog-body textarea {
-  width: 100%;
-  box-sizing: border-box;
-  border: 1px solid #dbe2ea;
-  border-radius: 10px;
-  padding: 12px;
-  font-family: inherit;
-  font-size: 14px;
-  outline: none;
+
+.dialog-body textarea{
+
+width:100%;
+
+box-sizing:border-box;
+
+padding:12px;
+
+border-radius:12px;
+
+border:1px solid #dbe2ea;
+
+font-family:inherit;
+
 }
 
-.dialog-body input:focus,
-.dialog-body select:focus,
-.dialog-body textarea:focus {
-  border-color: #4c9eff;
+
+
+
+
+
+
+/* Current Status */
+
+.current-status{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+background:#f8fafc;
+
+border-radius:14px;
+
+padding:14px;
+
+margin-bottom:20px;
+
 }
 
-.selected-preview {
-  margin-top: 20px;
-  padding: 14px 16px;
-  border-radius: 12px;
-  background: #f4f8ff;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+
+
+.current-status span{
+
+font-weight:800;
+
+color:#0f9d8a;
+
 }
 
-.selected-preview span {
-  color: #64748b;
+
+
+
+
+
+
+
+/* History */
+
+.tooth-history{
+
+margin-bottom:20px;
+
 }
 
-.selected-preview strong {
-  font-size: 20px;
+
+
+.tooth-history h3{
+
+margin-bottom:15px;
+
 }
 
-.dialog-footer {
-  display: flex;
-  justify-content: flex-start;
-  gap: 10px;
-  padding: 18px 24px;
-  border-top: 1px solid #edf1f5;
+
+
+.history-card{
+
+background:#f8fafc;
+
+border:1px solid #e2e8f0;
+
+border-radius:16px;
+
+padding:14px;
+
+margin-bottom:12px;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
 }
+
+
+
+.history-card strong{
+
+font-size:14px;
+
+color:#0f9d8a;
+
+}
+
+
+
+.history-card p{
+
+font-size:13px;
+
+color:#475569;
+
+margin:5px 0;
+
+}
+
+
+
+.history-card span{
+
+font-size:12px;
+
+color:#64748b;
+
+}
+
+
+
+
+
+
+
+/* Add Treatment Button */
+
+.add-treatment-btn{
+
+width:100%;
+
+border:none;
+
+background:#0f9d8a;
+
+color:white;
+
+padding:12px;
+
+border-radius:14px;
+
+font-family:inherit;
+
+font-weight:700;
+
+cursor:pointer;
+
+margin-top:15px;
+
+}
+
+
+
+
+
+
+
+/* Form Buttons */
+
+.dialog-footer{
+
+display:flex;
+
+justify-content:flex-end;
+
+gap:10px;
+
+padding:18px 20px;
+
+border-top:1px solid #e5e7eb;
+
+}
+
+
 
 .cancel-button,
-.save-button {
-  border: none;
-  border-radius: 10px;
-  padding: 11px 20px;
-  cursor: pointer;
-  font-family: inherit;
+
+.save-button{
+
+border:none;
+
+border-radius:12px;
+
+padding:11px 22px;
+
+font-family:inherit;
+
+font-weight:700;
+
+cursor:pointer;
+
 }
 
-.cancel-button {
-  background: #edf1f5;
+
+
+.cancel-button{
+
+background:#f1f5f9;
+
+color:#334155;
+
 }
 
-.save-button {
-  background: #247cff;
-  color: #ffffff;
+
+
+.save-button{
+
+background:#0f9d8a;
+
+color:white;
+
+}
+
+
+
+
+
+
+
+.empty-history{
+
+text-align:center;
+
+color:#64748b;
+
+padding:10px;
+
+}
+
+
+
+
+
+
+@media(max-width:900px){
+
+
+.summary-grid{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+
+}
+
+
+
+
+@media(max-width:600px){
+
+
+.summary-grid{
+
+grid-template-columns:1fr;
+
+}
+
+
+
+.dental-container{
+
+padding:15px;
+
+}
+
+
 }

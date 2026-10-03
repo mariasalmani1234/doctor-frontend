@@ -1,0 +1,81 @@
+<div
+  class="modal-backdrop"
+  (click)="onCancel()"
+>
+
+
+  <div
+    class="delete-modal"
+    (click)="$event.stopPropagation()"
+  >
+
+
+    <div class="delete-icon">
+      !
+    </div>
+
+
+    <h2>
+      حذف طرح درمان
+    </h2>
+
+
+    <p>
+
+      آیا از حذف طرح درمان
+
+      <strong>
+        «{{ treatment.title }}»
+      </strong>
+
+      مطمئن هستید؟
+
+    </p>
+
+
+    <span class="warning-text">
+      این عملیات قابل بازگشت نیست.
+    </span>
+
+
+    <div class="modal-actions">
+
+
+      <button
+        type="button"
+        class="modal-cancel"
+        [disabled]="loading"
+        (click)="onCancel()"
+      >
+        انصراف
+      </button>
+
+
+
+      <button
+        type="button"
+        class="modal-delete"
+        [disabled]="loading"
+        (click)="onConfirm()"
+      >
+
+        @if(loading){
+
+          در حال حذف...
+
+        } @else {
+
+          حذف طرح درمان
+
+        }
+
+      </button>
+
+
+    </div>
+
+
+  </div>
+
+
+</div>

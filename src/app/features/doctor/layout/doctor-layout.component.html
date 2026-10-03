@@ -1,0 +1,58 @@
+<div class="doctor-layout">
+
+
+  <app-doctor-header
+
+    (menuClick)="toggleMenu()"
+
+  >
+  </app-doctor-header>
+
+
+
+
+
+  <app-doctor-sidebar
+
+    [open]="menuOpen"
+
+    (closeMenu)="closeMenu()"
+
+  >
+  </app-doctor-sidebar>
+
+
+
+
+
+
+  @if(menuOpen){
+
+    <div
+
+      class="overlay"
+
+      (click)="closeMenu()"
+
+    >
+
+    </div>
+
+  }
+
+
+
+
+
+
+  <main class="content">
+
+
+    <router-outlet></router-outlet>
+
+
+  </main>
+
+
+
+</div>

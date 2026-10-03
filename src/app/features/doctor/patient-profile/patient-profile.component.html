@@ -1,0 +1,162 @@
+<div class="patient-profile-page">
+
+
+@if (loadingPatient) {
+
+
+<div class="page-loading">
+
+<div class="loading-avatar"></div>
+
+
+<div class="loading-content">
+
+<div class="loading-line large"></div>
+
+<div class="loading-line"></div>
+
+<div class="loading-line small"></div>
+
+</div>
+
+
+</div>
+
+
+}
+@else if(errorMessage){
+
+
+
+<div class="error-state">
+
+
+<div class="error-icon">
+!
+</div>
+
+
+<h2>
+مشکلی پیش آمده
+</h2>
+
+
+<p>
+{{errorMessage}}
+</p>
+
+
+<button
+type="button"
+(click)="backToSearch()"
+>
+
+بازگشت به جستجوی بیمار
+
+</button>
+
+
+</div>
+
+
+
+}
+@else if(patient){
+
+
+
+<section class="patient-header-wrapper">
+
+
+<app-patient-header
+
+[patient]="patient"
+
+(back)="backToSearch()"
+
+/>
+
+
+</section>
+
+
+
+
+
+<section class="patient-tabs-wrapper">
+
+
+<app-patient-tabs
+
+
+[patient]="patient"
+
+[patientId]="patient.id"
+
+[treatments]="treatments"
+
+[loading]="loadingTreatments"
+
+[saving]="savingTreatment"
+
+[selectedTreatment]="selectedTreatment"
+
+
+(create)="openCreateForm()"
+
+
+(view)="viewTreatment($event)"
+
+
+(edit)="openEditForm($event)"
+
+
+(delete)="openDeleteModal($event)"
+
+
+(save)="saveTreatment($event)"
+
+
+(cancel)="closeForm()"
+
+
+
+/>
+
+
+</section>
+
+
+
+
+}
+
+
+</div>
+
+
+
+
+
+@if(showDeleteModal && treatmentToDelete){
+
+
+
+<app-delete-dialog
+
+
+[treatment]="treatmentToDelete"
+
+[loading]="deleting"
+
+
+(confirm)="confirmDelete()"
+
+
+(cancel)="closeDeleteModal()"
+
+
+/>
+
+
+}

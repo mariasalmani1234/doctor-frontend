@@ -1,0 +1,277 @@
+:host {
+
+  display:block;
+
+  direction:rtl;
+
+}
+
+
+
+.patient-profile-page {
+
+  min-height:100vh;
+
+  padding:30px;
+
+  background:#f5f8fc;
+
+}
+
+
+
+
+
+/* Loading */
+
+.page-loading {
+
+  display:flex;
+
+  align-items:center;
+
+  gap:25px;
+
+  background:#fff;
+
+  border-radius:24px;
+
+  padding:30px;
+
+  border:1px solid #e2e8f0;
+
+}
+
+
+
+.loading-avatar {
+
+  width:85px;
+
+  height:85px;
+
+  border-radius:50%;
+
+  background:#e2e8f0;
+
+}
+
+
+
+.loading-content {
+
+  flex:1;
+
+}
+
+
+
+.loading-line {
+
+  height:14px;
+
+  background:#e2e8f0;
+
+  border-radius:12px;
+
+  margin-bottom:12px;
+
+}
+
+
+
+.loading-line.large {
+
+  width:260px;
+
+  height:24px;
+
+}
+
+
+
+.loading-line.small {
+
+  width:160px;
+
+}
+
+
+
+
+
+/* Error */
+
+.error-state {
+
+  background:white;
+
+  border-radius:24px;
+
+  padding:45px;
+
+  text-align:center;
+
+  border:1px solid #e2e8f0;
+
+  box-shadow:
+
+  0 10px 30px rgba(15,23,42,.06);
+
+}
+
+
+
+.error-icon {
+
+  width:65px;
+
+  height:65px;
+
+  margin:auto;
+
+  border-radius:50%;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  background:#fee2e2;
+
+  color:#dc2626;
+
+  font-size:32px;
+
+  font-weight:800;
+
+}
+
+
+
+.error-state h2 {
+
+  margin-top:20px;
+
+  color:#0f172a;
+
+}
+
+
+
+.error-state p {
+
+  color:#64748b;
+
+}
+
+
+
+.error-state button {
+
+  margin-top:20px;
+
+  border:none;
+
+  background:#2563eb;
+
+  color:white;
+
+  padding:13px 28px;
+
+  border-radius:14px;
+
+  font-family:inherit;
+
+  font-weight:700;
+
+  cursor:pointer;
+
+}
+
+
+
+
+
+/* Components spacing */
+
+app-patient-header,
+
+app-treatment-statistics,
+
+app-treatment-manager {
+
+  display:block;
+
+  margin-bottom:25px;
+
+}
+
+
+
+
+
+/* smooth layout */
+
+.patient-profile-page > * {
+
+  animation:fadeIn .25s ease;
+
+}
+
+
+
+@keyframes fadeIn {
+
+  from {
+
+    opacity:0;
+
+    transform:translateY(8px);
+
+  }
+
+  to {
+
+    opacity:1;
+
+    transform:none;
+
+  }
+
+}
+
+
+
+
+
+@media(max-width:768px){
+
+
+.patient-profile-page {
+
+  padding:15px;
+
+}
+
+
+
+.page-loading {
+
+  flex-direction:column;
+
+  align-items:flex-start;
+
+}
+
+
+
+.loading-line.large {
+
+  width:180px;
+
+}
+
+
+}

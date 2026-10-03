@@ -1,1 +1,81 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap');
+
+
+*{
+
+font-family:'Vazirmatn', sans-serif;
+
+}
+
+
+html,
+body {
+
+  margin:0;
+
+  padding:0;
+
+  font-family:"Vazirmatn", sans-serif;
+
+  direction:rtl;
+
+  background:#f7faf9;
+
+  color:#1f2937;
+
+}
+
+
+button,
+input,
+textarea,
+select {
+
+  font-family:"Vazirmatn", sans-serif;
+
+}
+:root {
+
+  --primary-color: #0f9d8a;
+
+  --primary-light: #e8f7f3;
+
+  --primary-hover: #087f70;
+
+  --success-color: #16a34a;
+
+  --warning-color: #f59e0b;
+
+  --danger-color: #ef4444;
+
+  --background-color: #f7faf9;
+
+  --card-background: #ffffff;
+
+  --border-color: #e5e7eb;
+
+  --text-color: #1f2937;
+
+  --muted-text: #64748b;
+
+}
+h1,
+h2,
+h3 {
+
+font-weight:800;
+
+}
+p,
+span,
+td {
+
+font-weight:400;
+
+}
+
+button {
+
+font-weight:700;
+
+}

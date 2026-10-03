@@ -1,0 +1,119 @@
+<header class="patient-header">
+
+
+<div class="top-section">
+
+
+<button 
+class="back-button" 
+(click)="onBack()"
+>
+
+← بازگشت به جستجوی بیماران
+
+</button>
+
+
+
+
+<div class="patient-main">
+
+
+
+<div class="patient-avatar">
+
+
+@if(patient.profileImage){
+
+<img  
+[src]="patient.profileImage"
+alt="patient"
+/>
+
+}
+@else{
+
+{{getInitials()}}
+
+}
+
+
+</div>
+
+
+
+
+
+<div class="patient-info">
+
+
+<h1>
+{{fullName}}
+</h1>
+
+
+
+
+<div class="basic-info">
+
+
+
+<span>
+کد ملی:
+<strong>
+{{nationalCode}}
+</strong>
+</span>
+
+
+
+
+<span>
+کد بیمه:
+<strong>
+{{patient.insuranceNumber || '-'}}
+</strong>
+</span>
+
+
+
+
+
+<span>
+سن:
+<strong>
+{{age}} سال
+</strong>
+</span>
+
+
+
+
+
+<span>
+جنسیت:
+<strong>
+{{genderLabel}}
+</strong>
+</span>
+
+
+
+
+</div>
+
+
+
+</div>
+
+
+
+</div>
+
+
+
+</div>
+
+
+
+</header>

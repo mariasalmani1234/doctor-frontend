@@ -1,0 +1,217 @@
+:host {
+  display:block;
+  direction:rtl;
+}
+
+
+
+.patient-header {
+
+  background:#fff;
+
+  border:1px solid #e5e7eb;
+
+  border-radius:18px;
+
+  padding:22px 28px;
+
+  box-shadow:
+  0 4px 15px rgba(0,0,0,.04);
+
+}
+
+
+
+/* دکمه برگشت */
+
+.back-button {
+
+  border:none;
+
+  background:#e8f7f3;
+
+  color:#0f9d8a;
+
+  padding:8px 16px;
+
+  border-radius:10px;
+
+  font-family:inherit;
+
+  font-weight:700;
+
+  margin-bottom:20px;
+
+}
+
+
+
+
+
+.patient-main {
+
+  display:flex;
+
+  align-items:center;
+
+  gap:25px;
+
+}
+
+
+
+
+
+/* عکس */
+
+.patient-avatar {
+
+  width:85px;
+
+  height:85px;
+
+  border-radius:50%;
+
+  background:#0f9d8a;
+
+  color:white;
+
+  display:flex;
+
+  justify-content:center;
+
+  align-items:center;
+
+  font-size:30px;
+
+  font-weight:800;
+
+  flex-shrink:0;
+
+}
+
+
+
+
+
+.patient-avatar img {
+
+  width:100%;
+
+  height:100%;
+
+  object-fit:cover;
+
+}
+
+
+
+
+
+/* بخش اطلاعات */
+
+.patient-info {
+
+  flex:1;
+
+}
+
+
+
+.patient-info h1 {
+
+  margin:0 0 18px;
+
+  font-size:26px;
+
+  color:#111827;
+
+}
+
+
+
+
+
+.basic-info {
+
+  display:grid;
+
+  grid-template-columns:
+  repeat(4,1fr);
+
+  gap:25px;
+
+}
+
+
+
+
+
+.basic-info span {
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:5px;
+
+  color:#64748b;
+
+  font-size:13px;
+
+}
+
+
+
+
+
+.basic-info strong {
+
+  color:#111827;
+
+  font-size:15px;
+
+  font-weight:700;
+
+}
+
+
+
+
+
+@media(max-width:900px){
+
+
+.basic-info{
+
+ grid-template-columns:
+ repeat(2,1fr);
+
+}
+
+
+}
+
+
+
+@media(max-width:600px){
+
+
+.patient-main{
+
+ flex-direction:column;
+
+ align-items:flex-start;
+
+}
+
+
+
+.basic-info{
+
+ grid-template-columns:1fr;
+
+}
+
+
+}

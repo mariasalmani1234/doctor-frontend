@@ -1,0 +1,78 @@
+<section class="treatment-section">
+
+
+@if(loading){
+
+
+  <div class="loading-box">
+
+
+    <div class="loading-item"></div>
+    <div class="loading-item"></div>
+    <div class="loading-item"></div>
+
+
+  </div>
+
+
+}
+@else if(treatments.length === 0){
+
+
+  <div class="empty-box">
+
+
+    <div class="empty-icon">
+      +
+    </div>
+
+
+    <h3>
+      سابقه درمانی وجود ندارد
+    </h3>
+
+
+    <p>
+      برای این بیمار هنوز درمانی ثبت نشده است.
+    </p>
+
+
+  </div>
+
+
+}
+@else{
+
+
+  <div class="cards-wrapper">
+
+
+    @for(
+      item of treatments;
+      track item.id
+    ){
+
+
+      <app-treatment-card
+
+        [treatment]="item"
+
+        (view)="onView($event)"
+
+        (edit)="onEdit($event)"
+
+        (delete)="onDelete($event)"
+
+      />
+
+
+    }
+
+
+  </div>
+
+
+}
+
+
+</section>

@@ -1,0 +1,100 @@
+<div class="patient-search-page">
+
+
+<section class="search-card">
+
+
+<div class="header">
+
+
+<div class="icon">
+👤
+</div>
+
+
+<div>
+
+<h1>
+جستجوی بیمار
+</h1>
+
+<p>
+جستجوی پرونده بیمار با کد ملی
+</p>
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="search-form">
+
+
+<input
+
+type="text"
+
+placeholder="کد ملی بیمار"
+
+[maxLength]="10"
+
+[formControl]="nationalCodeControl"
+
+/>
+
+
+
+<button
+
+(click)="searchPatient()"
+
+[disabled]="loading"
+
+>
+
+
+@if(loading){
+
+در حال جستجو...
+
+}
+
+@else{
+
+جستجو
+
+}
+
+
+</button>
+
+
+</div>
+
+
+
+
+
+@if(errorMessage){
+
+
+<div class="error">
+
+{{errorMessage}}
+
+</div>
+
+
+}
+
+
+
+</section>
+
+
+
+</div>

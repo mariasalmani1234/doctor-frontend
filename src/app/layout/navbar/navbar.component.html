@@ -1,14 +1,99 @@
-<nav class="navbar">
+<header class="navbar">
 
-  <div class="logo">
-    🩺 پزشک‌یاب
-  </div>
 
-  <div class="menu">
-    <a routerLink="/">خانه</a>
-    <a routerLink="/doctors">پزشکان</a>
-    <a routerLink="/login">ورود</a>
-    <a routerLink="/register">ثبت‌نام</a>
-  </div>
+<div class="brand">
+
+
+<img
+
+src="assets/images/logo.png"
+
+alt="دکتر نگین"
+
+/>
+
+
+<div class="brand-info">
+
+
+<h1>
+دکتر نگین
+</h1>
+
+
+<span>
+سامانه هوشمند خدمات پزشکی
+</span>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<nav class="desktop-menu">
+
+
+<a
+
+*ngFor="let item of menuItems"
+
+[routerLink]="item.link"
+
+>
+
+
+{{item.title}}
+
+
+</a>
+
 
 </nav>
+
+
+
+
+
+
+<div class="profile-box">
+
+
+<div class="avatar">
+
+{{userName.charAt(0)}}
+
+</div>
+
+
+
+<div class="profile-text">
+
+
+<strong>
+
+{{userName}}
+
+</strong>
+
+
+<span>
+
+{{userRole}}
+
+</span>
+
+
+</div>
+
+
+
+</div>
+
+
+
+</header>

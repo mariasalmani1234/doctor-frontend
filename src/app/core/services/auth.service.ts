@@ -29,7 +29,7 @@ export class AuthService {
     return this.http.post(
       `${this.apiUrl}/register/`,
       data
-    );
+    ); 
   }
 
   login(
@@ -86,4 +86,11 @@ export class AuthService {
       ? JSON.parse(user)
       : null;
   }
+
+  getPatientByNationalCode(
+  nationalCode: string): Observable<any> {
+  return this.http.get<any>(
+    `http://127.0.0.1:8000/api/patients/search/?national_code=${nationalCode}`
+  );
+}
 }
