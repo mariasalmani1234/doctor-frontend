@@ -1,59 +1,45 @@
 export interface Patient {
 
+  id: number;
 
-id:number;
+  userId?: number;
 
+  nationalCode: string;
 
-nationalCode:string;
+  firstName: string;
 
+  lastName: string;
 
-firstName:string;
+  fatherName?: string;
 
+  birthDate?: string | null;
 
-lastName:string;
+  gender?: string;
 
+  address?: string;
 
+  phone?: string;
 
-guardianship?: string;
+  guardianship?: string;
 
-fatherName?:string;
+  insuranceName?: string;
 
-birthDate?:string;
+  insuranceNumber?: string;
 
-gender?:string;
+  insuranceStatus?: string;
 
+  coverageType?: string;
 
+  relation?: string;
 
+  serviceStatus?: string;
 
+  veteranStatus?: string;
 
-insuranceName?:string;
+  educationLevel?: string;
 
-insuranceNumber?:string;
+  specialDisease?: string;
 
-insuranceStatus?:string;
-
-coverageType?:string;
-
-relation?:string;
-
-
-
-
-
-serviceStatus?:string;
-
-veteranStatus?:string;
-
-educationLevel?:string;
-
-specialDisease?:string;
-
-
-
-phone?:string;
-
-
-profileImage?:string;
-
+  profileImage?: string;
 
 }

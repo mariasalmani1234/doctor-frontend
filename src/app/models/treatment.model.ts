@@ -1,41 +1,32 @@
-import { TreatmentStatus } from "../core/enums/treatment-status.enum";
+import {
+  TreatmentStatus
+} from '../core/enums/treatment-status.enum';
 
 
 export interface Treatment {
 
+  id: number;
 
-  id:number;
+  patientId: number;
 
+  doctorId?: number;
 
-  patientId:number;
+  title: string;
 
+  diagnosis?: string;
 
-  title:string;
+  toothNumber?: number | null;
 
+  startDate: string;
 
-  diagnosis?:string;
+  endDate?: string | null;
 
+  description?: string;
 
-  startDate?:string;
+  status: TreatmentStatus;
 
+  createdAt?: string;
 
-  endDate?:string;
-
-
-  description?:string;
-
-
-  status:TreatmentStatus;
-
-
-
-  toothNumber?:number | null;
-
-
-  createdAt?:string;
-
-
-  updatedAt?:string;
-
+  updatedAt?: string;
 
 }
