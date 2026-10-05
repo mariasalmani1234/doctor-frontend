@@ -3,22 +3,17 @@ import {
   inject
 } from '@angular/core';
 
-
 import {
   HttpClient
 } from '@angular/common/http';
 
-
 import {
-  Observable,
-  map
+  Observable
 } from 'rxjs';
-
 
 import {
   Treatment
 } from '../../models/treatment.model';
-
 
 
 @Injectable({
@@ -26,13 +21,10 @@ import {
 })
 export class TreatmentService {
 
-
   private http = inject(HttpClient);
 
-
   private apiUrl =
-    'http://localhost:8000/api/treatments';
-
+    'http://127.0.0.1:8000/api/treatments';
 
 
   getByPatientId(
@@ -46,10 +38,9 @@ export class TreatmentService {
   }
 
 
-
   getById(
     id: number
-  ): Observable<Treatment | null> {
+  ): Observable<Treatment> {
 
     return this.http.get<Treatment>(
       `${this.apiUrl}/${id}/`
@@ -58,13 +49,10 @@ export class TreatmentService {
   }
 
 
-
   create(
     treatment: Omit<
       Treatment,
-      'id' |
-      'createdAt' |
-      'updatedAt'
+      'id' | 'createdAt'
     >
   ): Observable<Treatment> {
 
@@ -76,13 +64,12 @@ export class TreatmentService {
   }
 
 
-
   update(
     id: number,
     data: Partial<Treatment>
-  ): Observable<Treatment | null> {
+  ): Observable<Treatment> {
 
-    return this.http.put<Treatment>(
+    return this.http.patch<Treatment>(
       `${this.apiUrl}/${id}/`,
       data
     );
@@ -90,17 +77,12 @@ export class TreatmentService {
   }
 
 
-
   delete(
     id: number
-  ): Observable<boolean> {
+  ): Observable<void> {
 
-    return this.http.delete(
+    return this.http.delete<void>(
       `${this.apiUrl}/${id}/`
-    ).pipe(
-
-      map(() => true)
-
     );
 
   }

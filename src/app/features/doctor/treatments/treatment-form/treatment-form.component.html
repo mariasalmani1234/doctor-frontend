@@ -156,34 +156,17 @@ formControlName="toothNumber"
 >
 
 
-
-<option
-
-[value]="null"
-
->
-
-بدون انتخاب دندان
-
+<option [ngValue]="null">
+  بدون انتخاب دندان
 </option>
-
 
 
 @for(tooth of teeth; track tooth){
 
 
-
-<option
-
-[value]="tooth"
-
->
-
-
-دندان {{tooth}}
-
-
-</option>
+<option [ngValue]="tooth">
+    دندان {{ tooth }}
+  </option>
 
 
 
@@ -300,13 +283,8 @@ formControlName="status"
 
 
 <input
-
-type="text"
-
-formControlName="startDate"
-
-placeholder="1405/01/01"
-
+  type="date"
+  formControlName="startDate"
 >
 
 
@@ -333,15 +311,9 @@ placeholder="1405/01/01"
 
 
 <input
-
-type="text"
-
-formControlName="endDate"
-
-placeholder="1405/02/01"
-
+  type="date"
+  formControlName="endDate"
 >
-
 
 
 </div>

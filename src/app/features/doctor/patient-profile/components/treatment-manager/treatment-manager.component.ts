@@ -3,244 +3,397 @@ import {
   Component,
   EventEmitter,
   Input,
-  Output
+  OnChanges,
+  Output,
+  SimpleChanges
 } from '@angular/core';
 
-import { Treatment } from '../../../../../models/treatment.model';
+import {
+  Treatment
+} from '../../../../../models/treatment.model';
 
-import { TreatmentListComponent }
-from '../../../treatments/treatment-list/treatment-list.component';
-
-import { TreatmentFormComponent }
-from '../../../treatments/treatment-form/treatment-form.component';
+import {
+  TreatmentFormComponent
+} from '../../../treatments/treatment-form/treatment-form.component';
 
 
 @Component({
+  selector: 'app-treatment-manager',
 
-  selector:'app-treatment-manager',
+  standalone: true,
 
-  standalone:true,
-
-  imports:[
-    TreatmentListComponent,
+  imports: [
     TreatmentFormComponent
   ],
 
-  templateUrl:'./treatment-manager.component.html',
+  templateUrl:
+    './treatment-manager.component.html',
 
-  styleUrl:'./treatment-manager.component.css',
+  styleUrl:
+    './treatment-manager.component.css',
 
-  changeDetection:ChangeDetectionStrategy.OnPush
-
+  changeDetection:
+    ChangeDetectionStrategy.OnPush
 })
-export class TreatmentManagerComponent {
+export class TreatmentManagerComponent
+  implements OnChanges {
 
 
+  @Input({ required: true })
+  patientId!: number;
 
-@Input({required:true})
-patientId!:number;
 
+  @Input()
+  treatments: Treatment[] = [];
 
 
-@Input()
-treatments:Treatment[]=[];
+  @Input()
+  loading = false;
 
 
+  @Input()
+  saving = false;
 
-@Input()
-loading=false;
 
+  @Input()
+  selectedTreatment:
+    Treatment | null = null;
 
 
-@Input()
-saving=false;
+  @Output()
+  create =
+    new EventEmitter<void>();
 
 
+  @Output()
+  save =
+    new EventEmitter<Treatment>();
 
-@Input()
-selectedTreatment:Treatment|null=null;
 
+  @Output()
+  cancel =
+    new EventEmitter<void>();
 
 
+  @Output()
+  edit =
+    new EventEmitter<Treatment>();
 
 
-@Output()
-create=new EventEmitter<void>();
+  @Output()
+  delete =
+    new EventEmitter<Treatment>();
 
 
-@Output()
-save=new EventEmitter<Treatment>();
+  @Output()
+  view =
+    new EventEmitter<Treatment>();
 
 
-@Output()
-cancel=new EventEmitter<void>();
+  currentPage = 1;
 
+  pageSize = 5;
 
-@Output()
-edit=new EventEmitter<Treatment>();
+  showForm = false;
 
+  viewMode = false;
 
-@Output()
-delete=new EventEmitter<Treatment>();
 
+  // =========================================================
+  // Changes
+  // =========================================================
 
-@Output()
-view=new EventEmitter<Treatment>();
+  ngOnChanges(
+    changes: SimpleChanges
+  ): void {
 
+    if (changes['treatments']) {
 
+      const total =
+        this.totalPages;
 
 
+      if (total === 0) {
 
-currentPage=1;
+        this.currentPage = 1;
 
+      }
+      else if (
+        this.currentPage > total
+      ) {
 
-pageSize=5;
+        this.currentPage = total;
 
+      }
 
+    }
 
+  }
 
 
-get totalPages():number{
+  // =========================================================
+  // Pagination
+  // =========================================================
 
-return Math.ceil(
-this.treatments.length / this.pageSize
-);
+  get totalPages(): number {
 
-}
+    if (!this.treatments.length) {
 
+      return 0;
 
+    }
 
+    return Math.ceil(
+      this.treatments.length /
+      this.pageSize
+    );
 
+  }
 
-get visibleTreatments():Treatment[]{
 
+  get visibleTreatments(): Treatment[] {
 
-const start =
-(this.currentPage-1)*this.pageSize;
+    const start =
+      (this.currentPage - 1) *
+      this.pageSize;
 
 
-return this.treatments.slice(
-start,
-start+this.pageSize
-);
+    return this.treatments.slice(
+      start,
+      start + this.pageSize
+    );
 
+  }
 
-}
 
+  get pages(): number[] {
 
+    return Array.from(
+      {
+        length: this.totalPages
+      },
+      (_, index) =>
+        index + 1
+    );
 
+  }
 
 
+  changePage(
+    page: number
+  ): void {
 
-get pages():number[]{
+    if (
+      page < 1 ||
+      page > this.totalPages
+    ) {
 
+      return;
 
-return Array.from(
-{length:this.totalPages},
-(_,index)=>index+1
-);
+    }
 
 
-}
+    this.currentPage = page;
 
+  }
 
 
+  previousPage(): void {
 
+    if (
+      this.currentPage > 1
+    ) {
 
-changePage(page:number){
+      this.currentPage--;
 
-this.currentPage=page;
+    }
 
-}
+  }
 
 
+  nextPage(): void {
 
+    if (
+      this.currentPage <
+      this.totalPages
+    ) {
 
+      this.currentPage++;
 
-getStatusLabel(status:string):string{
+    }
 
+  }
 
-switch(status){
 
+  // =========================================================
+  // Create
+  // =========================================================
 
-case 'in_progress':
+  onCreate(): void {
 
-return 'در حال انجام';
+    this.viewMode = false;
 
+    this.showForm = true;
 
+    this.create.emit();
 
-case 'completed':
+  }
 
-return 'تکمیل شده';
 
+  // =========================================================
+  // View
+  // =========================================================
 
+  onView(
+    item: Treatment
+  ): void {
 
-case 'cancelled':
+    this.viewMode = true;
 
-return 'لغو شده';
+    this.showForm = true;
 
+    this.view.emit(item);
 
+  }
 
-case 'incomplete':
 
-return 'نیاز به بررسی';
+  // =========================================================
+  // Edit
+  // =========================================================
 
+  onEdit(
+    item: Treatment
+  ): void {
 
+    this.viewMode = false;
 
-default:
+    this.showForm = true;
 
-return '-';
+    this.edit.emit(item);
 
+  }
 
-}
 
+  // =========================================================
+  // Delete
+  // =========================================================
 
-}
+  onDelete(
+    item: Treatment
+  ): void {
 
+    this.delete.emit(item);
 
+  }
 
 
+  // =========================================================
+  // Save
+  // =========================================================
 
+  onSave(
+    item: Treatment
+  ): void {
 
-getStatusClass(status:string):string{
+    this.save.emit(item);
 
+  }
 
-switch(status){
 
+  // =========================================================
+  // Cancel
+  // =========================================================
 
-case 'in_progress':
+  onCancel(): void {
 
-return 'progress';
+    this.showForm = false;
 
+    this.viewMode = false;
 
+    this.cancel.emit();
 
-case 'completed':
+  }
 
-return 'completed';
 
+  // =========================================================
+  // Status
+  // =========================================================
 
+  getStatusLabel(
+    status: string
+  ): string {
 
-case 'cancelled':
+    switch (status) {
 
-return 'cancelled';
+      case 'in_progress':
+        return 'در حال انجام';
 
+      case 'completed':
+        return 'تکمیل شده';
 
+      case 'cancelled':
+        return 'لغو شده';
 
-case 'incomplete':
+      case 'incomplete':
+        return 'نیاز به بررسی';
 
-return 'review';
+      default:
+        return '-';
 
+    }
 
+  }
 
-default:
 
-return '';
+  getStatusClass(
+    status: string
+  ): string {
 
-}
+    switch (status) {
 
+      case 'in_progress':
+        return 'progress';
 
-}
+      case 'completed':
+        return 'completed';
 
+      case 'cancelled':
+        return 'cancelled';
 
+      case 'incomplete':
+        return 'review';
+
+      default:
+        return '';
+
+    }
+
+  }
+
+
+  // =========================================================
+  // Tooth
+  // =========================================================
+
+  getToothLabel(
+    toothNumber:
+      number |
+      null |
+      undefined
+  ): string {
+
+    if (
+      toothNumber === null ||
+      toothNumber === undefined
+    ) {
+
+      return 'بدون دندان';
+
+    }
+
+
+    return `دندان ${toothNumber}`;
+
+  }
 
 }

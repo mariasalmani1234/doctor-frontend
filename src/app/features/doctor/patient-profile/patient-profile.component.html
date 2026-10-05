@@ -1,162 +1,74 @@
 <div class="patient-profile-page">
 
 
-@if (loadingPatient) {
+  @if(errorMessage){
 
+    <div class="error-box">
 
-<div class="page-loading">
+      {{errorMessage}}
 
-<div class="loading-avatar"></div>
+    </div>
 
+  }
 
-<div class="loading-content">
 
-<div class="loading-line large"></div>
+  @if(patient){
 
-<div class="loading-line"></div>
 
-<div class="loading-line small"></div>
+    <section class="profile-container">
 
-</div>
 
+      <app-patient-header
 
-</div>
+        [patient]="patient"
 
+        (back)="backToSearch()"
 
-}
-@else if(errorMessage){
+      />
 
 
 
-<div class="error-state">
 
+      <section class="tabs-wrapper">
 
-<div class="error-icon">
-!
-</div>
 
+        <app-patient-tabs
 
-<h2>
-مشکلی پیش آمده
-</h2>
+          [patient]="patient"
 
+          [patientId]="patient.id"
 
-<p>
-{{errorMessage}}
-</p>
+          [treatments]="treatments"
 
+          [loading]="loadingTreatments"
 
-<button
-type="button"
-(click)="backToSearch()"
->
+          [saving]="savingTreatment"
 
-بازگشت به جستجوی بیمار
+          [selectedTreatment]="selectedTreatment"
 
-</button>
 
+          (create)="openCreateForm()"
 
-</div>
+          (view)="viewTreatment($event)"
 
+          (edit)="editTreatment($event)"
 
+          (delete)="deleteTreatment($event)"
 
-}
-@else if(patient){
+          (save)="saveTreatment($event)"
 
+          (cancel)="closeForm()"
 
+        />
 
-<section class="patient-header-wrapper">
 
+      </section>
 
-<app-patient-header
 
-[patient]="patient"
+    </section>
 
-(back)="backToSearch()"
 
-/>
-
-
-</section>
-
-
-
-
-
-<section class="patient-tabs-wrapper">
-
-
-<app-patient-tabs
-
-
-[patient]="patient"
-
-[patientId]="patient.id"
-
-[treatments]="treatments"
-
-[loading]="loadingTreatments"
-
-[saving]="savingTreatment"
-
-[selectedTreatment]="selectedTreatment"
-
-
-(create)="openCreateForm()"
-
-
-(view)="viewTreatment($event)"
-
-
-(edit)="openEditForm($event)"
-
-
-(delete)="openDeleteModal($event)"
-
-
-(save)="saveTreatment($event)"
-
-
-(cancel)="closeForm()"
-
-
-
-/>
-
-
-</section>
-
-
-
-
-}
+  }
 
 
 </div>
-
-
-
-
-
-@if(showDeleteModal && treatmentToDelete){
-
-
-
-<app-delete-dialog
-
-
-[treatment]="treatmentToDelete"
-
-[loading]="deleting"
-
-
-(confirm)="confirmDelete()"
-
-
-(cancel)="closeDeleteModal()"
-
-
-/>
-
-
-}

@@ -1,42 +1,25 @@
 export type AppointmentStatus =
-  | 'pending'
-  | 'confirmed'
-  | 'completed'
-  | 'cancelled';
-
+  | 'PENDING'
+  | 'CONFIRMED'
+  | 'COMPLETED'
+  | 'CANCELLED';
 
 export interface Appointment {
 
+  id: number;
 
-  id:number;
+  patientId: number;
 
+  patientName: string;
 
-  patientId:number;
+  doctorId: number;
 
+  date: string;
 
-  patientName:string;
+  time: string;
 
+  status: AppointmentStatus;
 
-  doctorId:number;
-
-
-
-  date:string;
-
-
-  time:string;
-
-
-
-  status:AppointmentStatus;
-
-
-
-  description?:string;
-
-
-
-  createdAt?:string;
-
+  createdAt?: string;
 
 }

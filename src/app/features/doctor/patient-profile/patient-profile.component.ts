@@ -1,8 +1,5 @@
 import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
-  inject,
   OnInit
 } from '@angular/core';
 
@@ -11,360 +8,90 @@ import {
   Router
 } from '@angular/router';
 
-import { PatientService } 
-from '../../../core/services/patient.service';
 
-import { TreatmentService }
-from '../../../core/services/treatment.service';
-
-import { Patient }
-from '../../../models/patient.model';
-
-import { Treatment }
-from '../../../models/treatment.model';
+import {
+  Patient
+} from '../../../models/patient.model';
 
 
-import { PatientHeaderComponent }
-from './components/patient-header/patient-header.component';
+import {
+  Treatment
+} from '../../../models/treatment.model';
 
-import { TreatmentStatisticsComponent }
-from './components/treatment-statistics/treatment-statistics.component';
 
-import { TreatmentManagerComponent }
-from './components/treatment-manager/treatment-manager.component';
+import {
+  PatientHeaderComponent
+} from './components/patient-header/patient-header.component';
 
-import { DeleteDialogComponent }
-from './components/delete-dialog/delete-dialog.component';
 
-import { DentalChartComponent } 
-from '../../../shared/components/dental-chart/dental-chart.component';
+import {
+  PatientTabsComponent
+} from './components/patient-tabs/patient-tabs.component';
 
-import { PatientTabsComponent }
-from './components/patient-tabs/patient-tabs.component';
+
 
 @Component({
-  selector: 'app-patient-profile',
-  standalone: true,
 
-  imports: [
+  selector:'app-patient-profile',
+
+  standalone:true,
+
+  imports:[
+
     PatientHeaderComponent,
-    TreatmentStatisticsComponent,
-    TreatmentManagerComponent,
-    DeleteDialogComponent,
-    DentalChartComponent,
-    PatientTabsComponent,
+
+    PatientTabsComponent
 
   ],
 
-  templateUrl: './patient-profile.component.html',
-  styleUrl: './patient-profile.component.css',
+  templateUrl:
+  './patient-profile.component.html',
 
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl:
+  './patient-profile.component.css'
+
 })
-export class PatientProfileComponent implements OnInit {
+export class PatientProfileComponent
+implements OnInit {
 
 
-  private route = inject(ActivatedRoute);
 
-  private router = inject(Router);
+patient!: Patient;
 
-  private patientService = inject(PatientService);
 
-  private treatmentService = inject(TreatmentService);
+treatments: Treatment[] = [];
 
-  private cdr = inject(ChangeDetectorRef);
+selectedTreatment:
+Treatment | null = null;
 
 
+loadingPatient = false;
 
-  patient: Patient | null = null;
+loadingTreatments = false;
 
-  treatments: Treatment[] = [];
+savingTreatment = false;
 
-  selectedTreatment: Treatment | null = null;
+errorMessage = '';
 
 
-  loadingPatient = true;
 
-  loadingTreatments = true;
+constructor(
+ private router:Router,
+ private route:ActivatedRoute
+){}
 
-  savingTreatment = false;
 
-  errorMessage = '';
 
-  showDeleteModal = false;
 
-  treatmentToDelete: Treatment | null = null;
 
-  deleting = false;
+ngOnInit():void{
 
 
-  ngOnInit(): void {
+this.loadMockPatient();
 
-    this.loadPatient();
 
-  }
+this.loadMockTreatments();
 
-
-  private loadPatient(): void {
-
-
-    const id = Number(
-      this.route.snapshot.paramMap.get('id')
-    );
-
-    if(!id){
-
-      this.backToSearch();
-
-      return;
-
-    }
-
-
-
-    this.patientService
-    .getById(id)
-    .subscribe({
-
-      next:(patient)=>{
-
-
-        this.patient = patient;
-
-        this.loadingPatient = false;
-
-
-
-        if(patient){
-
-          this.loadTreatments(patient.id);
-
-        }
-        else{
-
-          this.errorMessage =
-          'بیمار پیدا نشد.';
-
-        }
-
-
-
-        this.cdr.markForCheck();
-
-      },
-
-
-      error:()=>{
-
-
-        this.loadingPatient=false;
-
-        this.errorMessage=
-        'خطا در دریافت اطلاعات بیمار.';
-
-
-        this.cdr.markForCheck();
-
-      }
-
-
-    });
-
-
-  }
-
-
-
-
-
-  private loadTreatments(patientId:number):void{
-
-
-    this.loadingTreatments=true;
-
-
-    this.treatmentService
-    .getByPatientId(patientId)
-    .subscribe({
-
-      next:(data)=>{
-
-
-        this.treatments=data;
-
-        this.loadingTreatments=false;
-
-        this.cdr.markForCheck();
-
-
-      },
-
-
-      error:()=>{
-
-
-        this.loadingTreatments=false;
-
-        this.cdr.markForCheck();
-
-
-      }
-
-
-    });
-
-
-  }
-
-
-
-
-
-  openCreateForm():void{
-
-    this.selectedTreatment=null;
-
-  }
-
-
-
-
-
-  openEditForm(item:Treatment):void{
-
-
-    this.selectedTreatment={
-      ...item
-    };
-
-
-  }
-
-
-
-
-
-  viewTreatment(item:Treatment):void{
-
-
-    this.selectedTreatment={
-      ...item
-    };
-
-
-  }
-
-
-
-
-
-  saveTreatment(item:Treatment):void{
-
-
-    if(!this.patient){
-
-      return;
-
-    }
-
-
-
-    this.savingTreatment=true;
-
-
-
-    if(this.selectedTreatment){
-
-
-      this.treatmentService
-      .update(
-        this.selectedTreatment.id,
-        item
-      )
-      .subscribe({
-
-        next:(updated)=>{
-
-
-          if(updated){
-
-
-            this.treatments =
-            this.treatments.map(t=>
-
-              t.id===updated.id
-              ? updated
-              : t
-
-            );
-
-          }
-
-
-          this.finishSave();
-
-
-        },
-
-        error:()=>this.finishSave()
-
-      });
-
-
-
-    }
-    else{
-
-
-      this.treatmentService
-      .create(item)
-      .subscribe({
-
-        next:(created)=>{
-
-
-          this.treatments=[
-            created,
-            ...this.treatments
-          ];
-
-
-          this.finishSave();
-
-
-        },
-
-
-        error:()=>this.finishSave()
-
-      });
-
-
-    }
-
-
-
-  }
-
-
-
-
-
-  private finishSave():void{
-
-  this.savingTreatment = false;
-
-  this.selectedTreatment = null;
-
-  if(this.patient){
-
-    this.loadTreatments(
-      this.patient.id
-    );
-
-  }
-
-  this.cdr.markForCheck();
 
 }
 
@@ -372,121 +99,238 @@ export class PatientProfileComponent implements OnInit {
 
 
 
+loadMockPatient(){
 
-  openDeleteModal(item:Treatment):void{
 
+this.patient = {
 
-    this.treatmentToDelete=item;
 
-    this.showDeleteModal=true;
+id:1,
 
+userId:3,
 
-  }
 
+firstName:'ماریا',
 
+lastName:'سلمانی',
 
 
+nationalCode:'0110409443',
 
-  closeDeleteModal():void{
 
+phone:'09123456789',
 
-    if(this.deleting){
 
-      return;
+birthDate:'1382-12-19',
 
-    }
 
+gender:'زن',
 
-    this.showDeleteModal=false;
 
-    this.treatmentToDelete=null;
+address:'تهران',
 
 
-  }
+insuranceNumber:'INS-554433',
 
 
+insuranceStatus:'فعال',
 
 
+serviceStatus:'عادی',
 
-  confirmDelete():void{
 
+coverageType:'اصلی',
 
-    if(!this.treatmentToDelete){
 
-      return;
+veteranStatus:'ندارد',
 
-    }
 
+relation:' سرپرست',
 
 
-    this.deleting=true;
+educationLevel:'لیسانس',
 
 
+specialDisease:'فاقد بیماری'
 
-    this.treatmentService
-    .delete(
-      this.treatmentToDelete.id
-    )
-    .subscribe({
 
-      next:(success)=>{
+};
 
-        if(success && this.patient){
-        
-          this.loadTreatments(
-            this.patient.id
-          );
-        
-     
 
+}
 
-        }
 
 
-        this.deleting=false;
 
-        this.closeDeleteModal();
 
-        this.cdr.markForCheck();
+loadMockTreatments(){
 
 
-      },
+this.treatments=[
 
 
-      error:()=>{
+{
 
+id:1,
 
-        this.deleting=false;
+patientId:1,
 
-        this.cdr.markForCheck();
+title:'عصب کشی دندان',
 
+diagnosis:'پوسیدگی شدید دندان',
 
-      }
+toothNumber:16,
 
+status:'in_progress' as any,
 
-    });
+startDate:'1405/01/10',
 
+endDate:'',
 
-  }
+description:'جلسه اول درمان'
 
+},
 
 
+{
 
+id:2,
 
-  backToSearch():void{
+patientId:1,
 
+title:'جرم گیری',
 
-    this.router.navigate([
-      '/patient-search'
-    ]);
+diagnosis:'جرم دندان',
 
+toothNumber:null,
 
-  }
-  closeForm(): void {
+status:'completed' as any,
 
-  this.selectedTreatment = null;
+startDate:'1404/12/20',
 
- }
+endDate:'1404/12/25',
+
+description:'درمان کامل شد'
+
+},
+
+
+{
+
+id:3,
+
+patientId:1,
+
+title:'ترمیم دندان',
+
+diagnosis:'شکستگی دندان',
+
+toothNumber:24,
+
+status:'incomplete' as any,
+
+startDate:'1405/02/01',
+
+endDate:'',
+
+description:'نیاز به بررسی'
+
+}
+
+
+];
+
+
+}
+
+
+
+
+
+backToSearch(){
+
+this.router.navigate([
+
+'/doctor/patient-search'
+
+]);
+
+
+}
+
+
+
+
+
+openCreateForm(){
+
+this.selectedTreatment=null;
+
+}
+
+
+
+
+
+viewTreatment(
+item:Treatment
+){
+
+this.selectedTreatment=item;
+
+}
+
+
+
+
+
+editTreatment(
+item:Treatment
+){
+
+this.selectedTreatment=item;
+
+}
+
+
+
+
+
+deleteTreatment(
+item:Treatment
+){
+
+console.log(
+'delete',
+item
+);
+
+}
+
+
+
+
+
+saveTreatment(
+item:Treatment
+){
+
+console.log(
+'save',
+item
+);
+
+}
+
+
+
+
+
+closeForm(){
+
+this.selectedTreatment=null;
+
+}
 
 
 

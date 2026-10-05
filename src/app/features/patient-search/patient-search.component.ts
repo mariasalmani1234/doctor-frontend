@@ -63,7 +63,7 @@ export class PatientSearchComponent {
     }
 
     const nationalCode =
-      this.nationalCodeControl.value.trim();
+      this.nationalCodeControl.value?.trim();
 
     this.loading = true;
 
@@ -75,7 +75,7 @@ export class PatientSearchComponent {
         })
       )
       .subscribe({
-        next: patient => {
+        next: (patient:any) => {
 
           if (!patient) {
 
@@ -91,7 +91,7 @@ export class PatientSearchComponent {
           ]);
         },
 
-        error: error => {
+        error: (error:any) => {
 
           console.error(
             'Patient search error:',

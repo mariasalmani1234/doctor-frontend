@@ -1,1 +1,236 @@
-<p>appointments works!</p>
+<div class="appointments-page">
+
+  <div class="appointments-header">
+
+    <div>
+
+      <span class="page-label">
+        مدیریت نوبت‌ها
+      </span>
+
+      <h1>
+        نوبت‌های من
+      </h1>
+
+      <p>
+        مشاهده و مدیریت نوبت‌های ثبت‌شده
+      </p>
+
+    </div>
+
+    <button
+      type="button"
+      class="refresh-button"
+      [disabled]="loading"
+      (click)="loadAppointments()"
+    >
+      بروزرسانی
+    </button>
+
+  </div>
+
+
+  @if(errorMessage){
+
+    <div class="message error-message">
+      {{ errorMessage }}
+    </div>
+
+  }
+
+
+  @if(successMessage){
+
+    <div class="message success-message">
+      {{ successMessage }}
+    </div>
+
+  }
+
+
+  @if(loading){
+
+    <div class="loading-box">
+      در حال دریافت نوبت‌ها...
+    </div>
+
+  }
+
+
+  @if(!loading && appointments.length === 0){
+
+    <div class="empty-box">
+
+      <div class="empty-icon">
+        📅
+      </div>
+
+      <h2>
+        نوبتی وجود ندارد
+      </h2>
+
+      <p>
+        هنوز نوبتی برای نمایش ثبت نشده است.
+      </p>
+
+    </div>
+
+  }
+
+
+  @if(!loading && appointments.length > 0){
+
+    <div class="appointments-list">
+
+      @for(
+        appointment of appointments;
+        track appointment.id
+      ){
+
+        <div class="appointment-card">
+
+          <div class="appointment-top">
+
+            <div class="appointment-date">
+
+              <span>
+                تاریخ
+              </span>
+
+              <strong>
+                {{ formatDate(appointment.date) }}
+              </strong>
+
+            </div>
+
+
+            <div class="appointment-time">
+
+              <span>
+                ساعت
+              </span>
+
+              <strong>
+                {{ formatTime(appointment.time) }}
+              </strong>
+
+            </div>
+
+
+            <div
+              class="appointment-status"
+              [class]="
+                getStatusClass(
+                  appointment.status
+                )
+              "
+            >
+              {{ getStatusLabel(appointment.status) }}
+            </div>
+
+          </div>
+
+
+          <div class="appointment-info">
+
+            <div class="info-item">
+
+              <span>
+                بیمار
+              </span>
+
+              <strong>
+                {{ appointment.patientName || '---' }}
+              </strong>
+
+            </div>
+
+
+            <div class="info-item">
+
+              <span>
+                شناسه بیمار
+              </span>
+
+              <strong>
+                {{ appointment.patientId }}
+              </strong>
+
+            </div>
+
+
+            <div class="info-item">
+
+              <span>
+                شناسه پزشک
+              </span>
+
+              <strong>
+                {{ appointment.doctorId }}
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <div class="appointment-actions">
+
+            @if(
+              canConfirm(appointment)
+            ){
+
+              <button
+                type="button"
+                class="action-button confirm"
+                [disabled]="actionLoading"
+                (click)="confirmAppointment(appointment)"
+              >
+                تایید نوبت
+              </button>
+
+            }
+
+
+            @if(
+              canComplete(appointment)
+            ){
+
+              <button
+                type="button"
+                class="action-button complete"
+                [disabled]="actionLoading"
+                (click)="completeAppointment(appointment)"
+              >
+                ثبت انجام نوبت
+              </button>
+
+            }
+
+
+            @if(
+              canCancel(appointment)
+            ){
+
+              <button
+                type="button"
+                class="action-button cancel"
+                [disabled]="actionLoading"
+                (click)="cancelAppointment(appointment)"
+              >
+                لغو نوبت
+              </button>
+
+            }
+
+          </div>
+
+        </div>
+
+      }
+
+    </div>
+
+  }
+
+</div>

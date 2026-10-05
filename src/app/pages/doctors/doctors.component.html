@@ -69,10 +69,12 @@
         ⭐ {{ doctor.rating }}
       </p>
 
-      <button>
+      <button
+        type="button"
+        (click)="openBooking(doctor)"
+      >
         دریافت نوبت
       </button>
-
     </div>
 
   </div>
@@ -80,5 +82,158 @@
   <p *ngIf="!loading && doctors.length === 0">
     پزشکی پیدا نشد.
   </p>
+  @if(bookingDoctor){
 
+  <div
+    class="booking-overlay"
+    (click)="closeBooking()"
+  >
+
+    <div
+      class="booking-dialog"
+      (click)="$event.stopPropagation()"
+    >
+
+      <div class="booking-header">
+
+        <div>
+
+          <h2>
+            دریافت نوبت
+          </h2>
+
+          <p>
+            دکتر {{bookingDoctor.first_name}}
+            {{bookingDoctor.last_name}}
+          </p>
+
+        </div>
+
+        <button
+          type="button"
+          class="booking-close"
+          (click)="closeBooking()"
+        >
+          ×
+        </button>
+
+      </div>
+
+
+      <div class="booking-body">
+
+        <label>
+          تاریخ نوبت
+        </label>
+
+        <input
+          type="date"
+          [(ngModel)]="selectedDate"
+          [min]="getMinDate()"
+          (change)="onDateChange()"
+        >
+
+
+        @if(selectedDate){
+
+          <label>
+            ساعت نوبت
+          </label>
+
+          @if(availableTimes.length){
+
+            <div class="time-grid">
+
+              @for(
+                time of availableTimes;
+                track time
+              ){
+
+                <button
+                  type="button"
+                  class="time-button"
+                  [class.selected]="selectedTime === time"
+                  (click)="selectedTime = time"
+                >
+                  {{time}}
+                </button>
+
+              }
+
+            </div>
+
+          }
+          @else{
+
+            <p class="no-times">
+              پزشک در این روز برنامه کاری ندارد.
+            </p>
+
+          }
+
+        }
+
+
+        @if(bookingError){
+
+          <div class="booking-error">
+            {{bookingError}}
+          </div>
+
+        }
+
+
+        @if(bookingSuccess){
+
+          <div class="booking-success">
+            {{bookingSuccess}}
+          </div>
+
+        }
+
+      </div>
+
+
+      <div class="booking-footer">
+
+        <button
+          type="button"
+          class="booking-cancel"
+          (click)="closeBooking()"
+        >
+          بستن
+        </button>
+
+        <button
+          type="button"
+          class="booking-submit"
+          [disabled]="
+            bookingLoading ||
+            !selectedDate ||
+            !selectedTime ||
+            !patientId
+          "
+          (click)="bookAppointment()"
+        >
+
+          @if(bookingLoading){
+
+            در حال ثبت...
+
+          }
+          @else{
+
+            ثبت نوبت
+
+          }
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+}
 </div>

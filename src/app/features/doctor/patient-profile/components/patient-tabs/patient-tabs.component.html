@@ -1,120 +1,76 @@
 <section class="patient-tabs">
 
+  <div class="tabs-header">
 
-<div class="tabs-header">
+    <button
+      type="button"
+      [class.active]="activeTab === 'info'"
+      (click)="selectTab('info')"
+    >
+      اطلاعات بیمار
+    </button>
 
+    <button
+      type="button"
+      [class.active]="activeTab === 'treatment'"
+      (click)="selectTab('treatment')"
+    >
+      طرح درمان
+    </button>
 
-<button
+    <button
+      type="button"
+      [class.active]="activeTab === 'dental'"
+      (click)="selectTab('dental')"
+    >
+      وضعیت دندان‌ها
+    </button>
 
-[class.active]="activeTab==='info'"
-
-(click)="selectTab('info')"
-
->
-
-اطلاعات بیمار
-
-</button>
-
-
-
-
-<button
-
-[class.active]="activeTab==='treatment'"
-
-(click)="selectTab('treatment')"
-
->
-
-طرح درمان
-
-</button>
+  </div>
 
 
+  <div class="tab-content">
+
+    @if(activeTab === 'info') {
+
+      <app-patient-info
+        [patient]="patient"
+      />
+
+    }
 
 
-<button
+    @if(activeTab === 'treatment') {
 
-[class.active]="activeTab==='dental'"
+      <app-treatment-manager
+        [patientId]="patientId"
+        [treatments]="treatments"
+        [loading]="loading"
+        [saving]="saving"
+        [selectedTreatment]="selectedTreatment"
 
-(click)="selectTab('dental')"
+        (create)="onCreate()"
+        (view)="onView($event)"
+        (edit)="onEdit($event)"
+        (delete)="onDelete($event)"
+        (save)="onSave($event)"
+        (cancel)="onCancel()"
+      />
 
->
-
-وضعیت دندان‌ها
-
-</button>
-
-
-
-</div>
-
-
-
-
-<div class="tab-content">
+    }
 
 
-@if(activeTab==='info'){
+    @if(activeTab === 'dental') {
 
+     <app-dental-chart
 
-<app-patient-info
+        [patientId]="patientId"
 
-[patient]="patient"
-
-/>
-
-
-}
-
-
-
-
-
-@if(activeTab==='treatment'){
-
-
-<app-treatment-manager
-
-
-[patientId]="patientId"
-
-
-[treatments]="treatments"
-
-
-[loading]="loading"
-
-
-[saving]="saving"
-
-
-[selectedTreatment]="selectedTreatment"
+      
 
 />
+    }
 
-
-}
-
-
-
-
-
-@if(activeTab==='dental'){
-
-
-<app-dental-chart
-
-[patientId]="patientId"
-
-/>
-
-
-}
-
-
-</div>
-
+  </div>
 
 </section>

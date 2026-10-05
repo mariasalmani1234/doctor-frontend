@@ -1,200 +1,132 @@
 <div class="doctor-dashboard">
 
+  <header class="dashboard-header">
 
-<header class="dashboard-header">
+    <div>
 
+      <span>
+        پنل پزشک
+      </span>
 
-<div>
+      <h1>
+        خوش آمدید، دکتر نگین
+      </h1>
 
-<span>
-پنل پزشک
-</span>
+      <p>
+        مدیریت بیماران و خدمات درمانی
+      </p>
 
+    </div>
 
-<h1>
-خوش آمدید، دکتر نگین
-</h1>
+  </header>
 
 
-<p>
-مدیریت بیماران و خدمات درمانی
-</p>
+  @if(errorMessage) {
 
+    <div class="dashboard-error">
+      {{ errorMessage }}
+    </div>
 
-</div>
+  }
 
 
-</header>
+  <section class="stats">
 
+    <div class="stat-card">
 
+      <div class="icon">
+        📅
+      </div>
 
+      <div>
 
+        <span>
+          نوبت‌های امروز
+        </span>
 
-<section class="stats">
+        <strong>
+          {{ todayPatients }}
+        </strong>
 
+      </div>
 
-<div class="stat-card">
+    </div>
 
 
-<div class="icon">
+    <div class="stat-card">
 
-📅
+      <div class="icon">
+        👥
+      </div>
 
-</div>
+      <div>
 
+        <span>
+          بیماران فعال
+        </span>
 
-<div>
+        <strong>
+          {{ activeRecords }}
+        </strong>
 
-<span>
-نوبت‌های امروز
-</span>
+      </div>
 
+    </div>
 
-<strong>
-{{todayPatients}}
-</strong>
 
+    <div class="stat-card">
 
-</div>
+      <div class="icon">
+        🦷
+      </div>
 
+      <div>
 
-</div>
+        <span>
+          درمان‌های در انتظار
+        </span>
 
+        <strong>
+          {{ pendingTreatments }}
+        </strong>
 
+      </div>
 
+    </div>
 
+  </section>
 
-<div class="stat-card">
 
+  <section class="quick">
 
-<div class="icon">
+    <h2>
+      دسترسی سریع
+    </h2>
 
-👥
+    <div class="quick-grid">
 
-</div>
+      <a routerLink="/doctor/patient-search">
+        🔍
+        جستجوی بیمار
+      </a>
 
+      <a routerLink="/doctor/appointments">
+        📅
+        مدیریت نوبت‌ها
+      </a>
 
-<div>
+      <a>
+        📋
+        پرونده‌ها
+      </a>
 
-<span>
-بیماران فعال
-</span>
+      <a>
+        💬
+        پیام‌ها
+      </a>
 
+    </div>
 
-<strong>
-{{activeRecords}}
-</strong>
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-<div class="stat-card">
-
-
-<div class="icon">
-
-🦷
-
-</div>
-
-
-<div>
-
-<span>
-درمان‌های در انتظار
-</span>
-
-
-<strong>
-{{completedTreatments}}
-</strong>
-
-
-</div>
-
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-
-
-<section class="quick">
-
-
-<h2>
-دسترسی سریع
-</h2>
-
-
-
-<div class="quick-grid">
-
-
-
-<a routerLink="/patient-search">
-
-🔍
-
-جستجوی بیمار
-
-</a>
-
-
-
-
-<a routerLink="/appointments">
-
-📅
-
-مدیریت نوبت‌ها
-
-</a>
-
-
-
-
-<a>
-
-📋
-
-پرونده‌ها
-
-</a>
-
-
-
-
-<a>
-
-💬
-
-پیام‌ها
-
-</a>
-
-
-
-</div>
-
-
-</section>
-
-
-
-
+  </section>
 
 </div>

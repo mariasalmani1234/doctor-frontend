@@ -1,367 +1,566 @@
 <section class="records-panel">
 
 
+  <!-- ========================================= -->
+  <!-- Header -->
+  <!-- ========================================= -->
 
-<header class="records-header">
+  <header class="records-header">
 
+    <div>
 
-<div>
+      <div class="title-line">
 
+        <h2>
+          طرح درمان بیمار
+        </h2>
 
-<div class="title-line">
+        <span class="count">
+          {{ treatments.length }}
+        </span>
 
+      </div>
 
-<h2>
-طرح درمان بیمار
-</h2>
+      <p>
+        سوابق درمان و اقدامات انجام شده
+      </p>
 
+    </div>
 
-<span class="count">
-{{treatments.length}}
-</span>
 
+    <button
+      type="button"
+      class="new-btn"
+      (click)="onCreate()"
+      [disabled]="saving"
+    >
 
-</div>
+      + افزودن درمان جدید
 
+    </button>
 
-<p>
-سوابق درمان و اقدامات انجام شده
-</p>
+  </header>
 
 
-</div>
 
+  <!-- ========================================= -->
+  <!-- Form -->
+  <!-- ========================================= -->
 
+  @if (showForm) {
 
+    @if (viewMode && selectedTreatment) {
 
+      <section class="treatment-view-card">
 
-<button
+        <header class="view-header">
 
-class="new-btn"
+          <div>
 
-(click)="create.emit()"
+            <h3>
+              مشاهده طرح درمان
+            </h3>
 
->
+            <p>
+              اطلاعات ثبت‌شده درمان بیمار
+            </p>
 
-＋ افزودن درمان جدید
+          </div>
 
-</button>
 
+          <button
+            type="button"
+            class="close-btn"
+            (click)="onCancel()"
+          >
+            بستن
+          </button>
 
+        </header>
 
-</header>
 
 
+        <div class="view-grid">
 
 
+          <div class="view-field">
 
+            <span>
+              عنوان درمان
+            </span>
 
-@if(loading){
+            <strong>
+              {{ selectedTreatment.title }}
+            </strong>
 
+          </div>
 
-<div class="loading">
 
-در حال دریافت اطلاعات...
 
-</div>
+          <div class="view-field">
 
+            <span>
+              تشخیص
+            </span>
 
-}
+            <strong>
+              {{ selectedTreatment.diagnosis || '-' }}
+            </strong>
 
-@else {
+          </div>
 
 
 
-<div class="table-wrapper">
+          <div class="view-field">
 
+            <span>
+              دندان مرتبط
+            </span>
 
-<table>
+            <strong>
+              {{
+                getToothLabel(
+                  selectedTreatment.toothNumber
+                )
+              }}
+            </strong>
 
+          </div>
 
-<thead>
 
 
-<tr>
+          <div class="view-field">
 
+            <span>
+              وضعیت
+            </span>
 
-<th>
-عنوان درمان
-</th>
+            <strong
+              class="status"
+              [class.progress]="
+                selectedTreatment.status === 'in_progress'
+              "
+              [class.completed]="
+                selectedTreatment.status === 'completed'
+              "
+              [class.cancelled]="
+                selectedTreatment.status === 'cancelled'
+              "
+              [class.review]="
+                selectedTreatment.status === 'incomplete'
+              "
+            >
+              {{
+                getStatusLabel(
+                  selectedTreatment.status
+                )
+              }}
+            </strong>
 
+          </div>
 
-<th>
-تشخیص
-</th>
 
 
-<th>
-تاریخ شروع
-</th>
+          <div class="view-field">
 
+            <span>
+              تاریخ شروع
+            </span>
 
-<th>
-تاریخ پایان
-</th>
+            <strong>
+              {{ selectedTreatment.startDate || '-' }}
+            </strong>
 
+          </div>
 
-<th>
-وضعیت
-</th>
 
 
-<th>
-عملیات
-</th>
+          <div class="view-field">
 
+            <span>
+              تاریخ پایان
+            </span>
 
-</tr>
+            <strong>
+              {{ selectedTreatment.endDate || '-' }}
+            </strong>
 
+          </div>
 
-</thead>
 
 
+          <div class="view-field full">
 
+            <span>
+              توضیحات
+            </span>
 
+            <p>
+              {{ selectedTreatment.description || '-' }}
+            </p>
 
+          </div>
 
-<tbody>
 
+        </div>
 
 
-@for(item of visibleTreatments; track item.id){
+      </section>
 
+    }
 
+    @else {
 
-<tr>
+      <app-treatment-form
+        [patientId]="patientId"
+        [treatment]="selectedTreatment"
+        [saving]="saving"
+        (save)="onSave($event)"
+        (cancel)="onCancel()"
+      />
 
+    }
 
+  }
 
-<td>
+  @else {
 
-<strong>
 
-{{item.title}}
+    <!-- ========================================= -->
+    <!-- Loading -->
+    <!-- ========================================= -->
 
-</strong>
+    @if (loading) {
 
-</td>
+      <div class="loading">
 
+        در حال دریافت اطلاعات...
 
+      </div>
 
+    }
 
+    @else {
 
-<td>
 
-{{item.diagnosis || '-'}}
+      <!-- ========================================= -->
+      <!-- Empty -->
+      <!-- ========================================= -->
 
-</td>
+      @if (treatments.length === 0) {
 
+        <div class="empty-state">
 
+          <div class="empty-icon">
+            +
+          </div>
 
+          <h3>
+            هنوز طرح درمانی ثبت نشده است
+          </h3>
 
+          <p>
+            برای این بیمار هنوز هیچ سابقه درمانی ثبت نشده است.
+          </p>
 
-<td>
+          <button
+            type="button"
+            class="new-btn"
+            (click)="onCreate()"
+          >
 
-{{item.startDate || '-'}}
+            افزودن اولین درمان
 
-</td>
+          </button>
 
+        </div>
 
+      }
 
+      @else {
 
 
-<td>
+        <!-- ========================================= -->
+        <!-- Table -->
+        <!-- ========================================= -->
 
-{{item.endDate || '-'}}
+        <div class="table-wrapper">
 
-</td>
+          <table>
 
+            <thead>
 
+              <tr>
 
+                <th>
+                  عنوان درمان
+                </th>
 
+                <th>
+                  تشخیص
+                </th>
 
-<td>
+                <th>
+                  دندان
+                </th>
 
+                <th>
+                  تاریخ شروع
+                </th>
 
-<span
+                <th>
+                  تاریخ پایان
+                </th>
 
-class="status"
+                <th>
+                  وضعیت
+                </th>
 
-[class.progress]="item.status==='in_progress'"
+                <th>
+                  عملیات
+                </th>
 
-[class.completed]="item.status==='completed'"
+              </tr>
 
-[class.cancelled]="item.status==='cancelled'"
+            </thead>
 
-[class.review]="item.status==='incomplete'"
 
->
+            <tbody>
 
+              @for (
+                item of visibleTreatments;
+                track item.id
+              ) {
 
-{{getStatusLabel(item.status)}}
+                <tr>
 
 
-</span>
+                  <!-- عنوان -->
 
+                  <td>
 
-</td>
+                    <strong>
+                      {{ item.title }}
+                    </strong>
 
+                  </td>
 
 
 
+                  <!-- تشخیص -->
 
+                  <td>
 
-<td>
+                    {{ item.diagnosis || '-' }}
 
+                  </td>
 
-<div class="actions">
 
 
+                  <!-- دندان -->
 
-<button
+                  <td>
 
-class="action-btn view"
+                    <span class="tooth-number">
 
-(click)="view.emit(item)"
+                      {{
+                        getToothLabel(
+                          item.toothNumber
+                        )
+                      }}
 
->
+                    </span>
 
+                  </td>
 
-<span class="icon">
 
-👁
 
-</span>
+                  <!-- تاریخ شروع -->
 
+                  <td>
 
-مشاهده
+                    {{ item.startDate || '-' }}
 
+                  </td>
 
-</button>
 
 
+                  <!-- تاریخ پایان -->
 
+                  <td>
 
+                    {{ item.endDate || '-' }}
 
+                  </td>
 
-<button
 
-class="action-btn edit"
 
-(click)="edit.emit(item)"
+                  <!-- وضعیت -->
 
->
+                  <td>
 
+                    <span
+                      class="status"
+                      [class.progress]="
+                        item.status === 'in_progress'
+                      "
+                      [class.completed]="
+                        item.status === 'completed'
+                      "
+                      [class.cancelled]="
+                        item.status === 'cancelled'
+                      "
+                      [class.review]="
+                        item.status === 'incomplete'
+                      "
+                    >
 
-<span class="icon">
+                      {{
+                        getStatusLabel(
+                          item.status
+                        )
+                      }}
 
-✏️
+                    </span>
 
-</span>
+                  </td>
 
 
-ویرایش
 
+                  <!-- عملیات -->
 
-</button>
+                  <td>
 
+                    <div class="actions">
 
 
+                      <button
+                        type="button"
+                        class="action-btn view"
+                        (click)="onView(item)"
+                      >
 
+                        <span class="icon">
+                          👁
+                        </span>
 
+                        مشاهده
 
+                      </button>
 
-<button
 
-class="action-btn delete"
 
-(click)="delete.emit(item)"
+                      <button
+                        type="button"
+                        class="action-btn edit"
+                        (click)="onEdit(item)"
+                      >
 
->
+                        <span class="icon">
+                          ✏️
+                        </span>
 
+                        ویرایش
 
-<span class="icon">
+                      </button>
 
-🗑️
 
-</span>
 
+                      <button
+                        type="button"
+                        class="action-btn delete"
+                        (click)="onDelete(item)"
+                      >
 
-حذف
+                        <span class="icon">
+                          🗑️
+                        </span>
 
+                        حذف
 
-</button>
+                      </button>
 
 
+                    </div>
 
+                  </td>
 
-</div>
 
+                </tr>
 
-</td>
+              }
 
+            </tbody>
 
+          </table>
 
+        </div>
 
 
-</tr>
 
+        <!-- ========================================= -->
+        <!-- Pagination -->
+        <!-- ========================================= -->
 
-}
+        @if (totalPages > 1) {
 
+          <div class="pagination">
 
 
-</tbody>
+            <button
+              type="button"
+              [disabled]="currentPage === 1"
+              (click)="previousPage()"
+            >
 
+              قبلی
 
+            </button>
 
-</table>
 
+            @for (
+              page of pages;
+              track page
+            ) {
 
-</div>
+              <button
+                type="button"
+                [class.active]="
+                  page === currentPage
+                "
+                (click)="changePage(page)"
+              >
 
+                {{ page }}
 
+              </button>
 
+            }
 
 
+            <button
+              type="button"
+              [disabled]="
+                currentPage === totalPages
+              "
+              (click)="nextPage()"
+            >
 
-@if(totalPages>1){
+              بعدی
 
+            </button>
 
 
-<div class="pagination">
+          </div>
 
+        }
 
-@for(page of pages;track page){
 
+      }
 
-<button
+    }
 
-[class.active]="page===currentPage"
-
-(click)="changePage(page)"
-
->
-
-{{page}}
-
-</button>
-
-
-}
-
-
-
-</div>
-
-
-}
-
-
-
-
-}
-
+  }
 
 
 </section>

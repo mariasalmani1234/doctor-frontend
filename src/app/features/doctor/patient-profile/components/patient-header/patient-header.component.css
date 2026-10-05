@@ -18,6 +18,7 @@
   box-shadow:
   0 4px 15px rgba(0,0,0,.04);
 
+  
 }
 
 
@@ -43,6 +44,7 @@
   margin-bottom:20px;
 
 }
+
 
 
 
@@ -148,33 +150,20 @@
 
 
 .basic-info span {
-
   display:flex;
-
-  flex-direction:column;
-
-  gap:5px;
-
+  flex-direction:row;
+  align-items:center;
+  gap:8px;
   color:#64748b;
-
   font-size:13px;
-
 }
-
-
-
 
 
 .basic-info strong {
-
   color:#111827;
-
   font-size:15px;
-
   font-weight:700;
-
 }
-
 
 
 
